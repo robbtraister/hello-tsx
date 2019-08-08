@@ -17,11 +17,9 @@ window.setUser = function setUser (u) {
   user = u
 }
 
-function renderer (Component, appId = 'app') {
+function renderer (Component, appId = __COMPOSITION_APP_ID__) {
   function render () {
-    const targetElement = document.getElementById(
-      __COMPOSITION_APP_ID__ || appId
-    )
+    const targetElement = document.getElementById(appId)
 
     if (targetElement) {
       const originalHTML = targetElement.innerHTML

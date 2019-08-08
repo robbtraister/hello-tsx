@@ -7,8 +7,9 @@ export default function render (options) {
     try {
       res.send(
         await renderSite({
+          appId: options.appId,
+          appTitle: options.appTitle,
           location: req.originalUrl,
-          title: options.appTitle,
           user: req.user
         })
       )

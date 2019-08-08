@@ -128,8 +128,7 @@ module.exports = (env, argv) => {
       devtool,
       entry: {
         app: path.resolve(__dirname, 'src', 'client', 'app'),
-        login: path.resolve(__dirname, 'src', 'client', 'login'),
-        site: path.join(projectRoot, 'src', 'views', 'site')
+        login: path.resolve(__dirname, 'src', 'client', 'login')
       },
       mode,
       module: {
@@ -167,6 +166,29 @@ module.exports = (env, argv) => {
       ],
       resolve,
       target: 'web'
+    },
+    {
+      devtool,
+      entry: {
+        site: path.join(projectRoot, 'src', 'views', 'site')
+      },
+      mode,
+      module: {
+        rules: rules({ isProd, extractCss: true })
+      },
+      output: {
+        filename: 'build/[name].js',
+        chunkFilename: 'build/[name].js',
+        path: path.join(projectRoot)
+      },
+      plugins: [
+        new MiniCssExtractPlugin({
+          filename: 'dist/[name].css',
+          chunkFilename: 'dist/[name].css'
+        })
+      ],
+      resolve,
+      target: 'node'
     },
     {
       devtool,

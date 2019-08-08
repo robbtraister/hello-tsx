@@ -19,12 +19,14 @@ const Components = {
 const STYLED_COMPONENTS_PLACEHOLDER = 'styled-components'
 
 export default async function renderSite ({
+  appId,
+  appTitle,
   location,
-  title,
   user
 }: {
-  location: string
-  title?: string
+  appId: string,
+  appTitle?: string,
+  location: string,
   user?: object
 }) {
   const name: string = user ? 'app' : 'login'
@@ -32,10 +34,10 @@ export default async function renderSite ({
 
   const context: { url?: string } = {}
 
-  const App = () => (
-    <div id='app'>
+  const App = ({ appId: propId, ...props }) => (
+    <div id={propId || appId}>
       <StaticRouter context={context} location={location}>
-        <Component user={user} />
+        <Component {...props} user={user} />
       </StaticRouter>
     </div>
   )
@@ -65,7 +67,7 @@ export default async function renderSite ({
       .concat(React.createElement(STYLED_COMPONENTS_PLACEHOLDER))
 
   const props = {
-    title: title || 'title',
+    title: appTitle,
     App,
     Libs,
     Styles
