@@ -8,6 +8,7 @@
     "clean": "rm -rf \"${PROJECT_ROOT:-.}\"/{build,dist}",
     "dev": "npm run watch & npm run start",
     "lint": "prettier-standard {bin,env,src}/**/*.{js,jsx,ts,tsx} && standard --fix",
+    "prod": "NODE_ENV=production npm run build && NODE_ENV=production npm run start",
     "start": "node ./src/server",
     "test": "standard && jest",
     "preversion": "npm run test && git add -A",

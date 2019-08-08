@@ -24,9 +24,9 @@ export default async function renderSite ({
   location,
   user
 }: {
-  appId: string,
-  appTitle?: string,
-  location: string,
+  appId: string
+  appTitle?: string
+  location: string
   user?: object
 }) {
   const name: string = user ? 'app' : 'login'

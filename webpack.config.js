@@ -167,6 +167,7 @@ module.exports = (env, argv) => {
       resolve,
       target: 'web'
     },
+    // this is just to generate CSS
     {
       devtool,
       entry: {
@@ -209,9 +210,9 @@ module.exports = (env, argv) => {
         rules: rules({ isProd })
       },
       output: {
-        filename: 'build/[name].js',
+        filename: '[name].js',
         libraryTarget: 'commonjs2',
-        path: projectRoot
+        path: path.join(projectRoot, 'build')
       },
       optimization,
       resolve,
