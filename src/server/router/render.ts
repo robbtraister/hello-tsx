@@ -21,11 +21,13 @@ export default function render (options) {
   return [
     renderer,
     async (err, req, res, next) => {
-      if ([401, 403].includes(err.status)) {
+      if (err.status === 401) {
         try {
+          res.status(err.status)
           await renderer(req, res, next)
-        } catch (e) {
-          next(e)
+        } catch (_) {
+          // just propagate the original error
+          next(err)
         }
       } else {
         next(err)
