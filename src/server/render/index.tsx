@@ -17,6 +17,26 @@ const Components = {
 }
 
 const STYLED_COMPONENTS_PLACEHOLDER = 'styled-components'
+const STYLED_COMPONENTS_PATTERN = new RegExp(
+  `<${STYLED_COMPONENTS_PLACEHOLDER}></${STYLED_COMPONENTS_PLACEHOLDER}>`,
+  'g'
+)
+
+const getCssLink = (key) =>
+  <link
+    key={key}
+    rel='stylesheet'
+    type='text/css'
+    href={`/dist/${key}.css`}
+  />
+
+const getScriptTag = (key) =>
+  <script
+    defer
+    key={key}
+    type='application/javascript'
+    src={`/dist/${key}.js`}
+  />
 
 export default async function renderSite ({
   appId,
@@ -44,26 +64,12 @@ export default async function renderSite ({
 
   const Libs = () =>
     ['runtime', 'common', name]
-      .map(key => (
-        <script
-          defer
-          key={key}
-          type='application/javascript'
-          src={`/dist/${key}.js`}
-        />
-      ))
+      .map(getScriptTag)
       .concat(<script defer key='user' src='/auth/user?jsonp=setUser' />)
 
   const Styles = () =>
     ['site', 'common', name]
-      .map(key => (
-        <link
-          key={key}
-          rel='stylesheet'
-          type='text/css'
-          href={`/dist/${key}.css`}
-        />
-      ))
+      .map(getCssLink)
       .concat(React.createElement(STYLED_COMPONENTS_PLACEHOLDER))
 
   const props = {
@@ -84,10 +90,7 @@ export default async function renderSite ({
     }
 
     return `<!DOCTYPE html>${html.replace(
-      new RegExp(
-        `<${STYLED_COMPONENTS_PLACEHOLDER}></${STYLED_COMPONENTS_PLACEHOLDER}>`,
-        'g'
-      ),
+      STYLED_COMPONENTS_PATTERN,
       sheet.getStyleTags()
     )}`
   } finally {

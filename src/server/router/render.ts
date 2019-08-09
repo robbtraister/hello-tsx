@@ -2,8 +2,8 @@
 
 import renderSite from '../render'
 
-export default function render (options) {
-  async function renderer (req, res, next) {
+export default function (options) {
+  async function render (req, res, next) {
     try {
       res.send(
         await renderSite({
@@ -19,12 +19,12 @@ export default function render (options) {
   }
 
   return [
-    renderer,
+    render,
     async (err, req, res, next) => {
       if (err.status === 401) {
         try {
           res.status(err.status)
-          await renderer(req, res, next)
+          await render(req, res, next)
         } catch (_) {
           // just propagate the original error
           next(err)
