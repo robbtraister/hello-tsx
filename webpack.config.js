@@ -1,5 +1,6 @@
 'use strict'
 
+const { exec } = require('child_process')
 const path = require('path')
 
 const { DefinePlugin } = require('webpack')
@@ -14,6 +15,16 @@ const {
   isProd,
   projectRoot
 } = require('./env')
+
+class OnBuildPlugin {
+  constructor (fn) {
+    this.fn = fn
+  }
+
+  apply (compiler) {
+    compiler.hooks.done.tap('OnBuildPlugin', this.fn)
+  }
+}
 
 const optimization = {
   minimizer: [
@@ -186,13 +197,15 @@ module.exports = (env, argv) => {
         new MiniCssExtractPlugin({
           filename: 'dist/[name].css',
           chunkFilename: 'dist/[name].css'
+        }),
+        new OnBuildPlugin((stats) => {
+          exec(`rm -rf ${path.join(projectRoot, 'build', 'site.js*')}`, () => {})
         })
       ],
       resolve,
       target: 'node'
     },
     {
-      devtool,
       entry: {
         router: path.join(projectRoot, 'src', 'server', 'router')
       },
@@ -205,7 +218,6 @@ module.exports = (env, argv) => {
           }
         }
       ],
-      mode,
       module: {
         rules: rules({ isProd })
       },
@@ -216,7 +228,10 @@ module.exports = (env, argv) => {
       },
       optimization,
       resolve,
-      target: 'node'
+      target: 'node',
+      // these are set to enable proper source-map support
+      devtool: 'source-map',
+      mode: 'development'
     }
   ]
 }

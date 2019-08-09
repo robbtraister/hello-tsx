@@ -7,6 +7,8 @@ const express = require('express')
 
 const { projectRoot } = require('../../env')
 
+require('source-map-support/register')
+
 function unpack (mod) {
   return mod && mod.__esModule && mod.default ? mod.default : mod
 }
