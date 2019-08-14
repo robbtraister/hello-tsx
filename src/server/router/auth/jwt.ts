@@ -19,8 +19,8 @@ export function authenticate (
   const successRedirect = !options.successRedirect
     ? null
     : options.successRedirect instanceof Function
-    ? options.successRedirect
-    : () => options.successRedirect
+      ? options.successRedirect
+      : () => options.successRedirect
 
   return (req, res, next) => {
     if (req.user) {
