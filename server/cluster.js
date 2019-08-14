@@ -8,7 +8,7 @@ function main () {
   if (cluster.isMaster) {
     const {
       core: { workerCount }
-    } = require('../../env')
+    } = require('../env')
 
     for (let w = 0; w < workerCount; w++) {
       cluster.fork()

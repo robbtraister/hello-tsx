@@ -22,21 +22,18 @@ const STYLED_COMPONENTS_PATTERN = new RegExp(
   'g'
 )
 
-const getCssLink = (key) =>
-  <link
-    key={key}
-    rel='stylesheet'
-    type='text/css'
-    href={`/dist/${key}.css`}
-  />
+const getCssLink = key => (
+  <link key={key} rel='stylesheet' type='text/css' href={`/dist/${key}.css`} />
+)
 
-const getScriptTag = (key) =>
+const getScriptTag = key => (
   <script
     defer
     key={key}
     type='application/javascript'
     src={`/dist/${key}.js`}
   />
+)
 
 export default async function renderSite ({
   appId,

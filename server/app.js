@@ -5,7 +5,7 @@ const path = require('path')
 const compression = require('compression')
 const express = require('express')
 
-const { projectRoot } = require('../../env')
+const { projectRoot } = require('../env')
 
 require('source-map-support/register')
 

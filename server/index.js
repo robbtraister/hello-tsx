@@ -2,7 +2,7 @@
 
 const app = require('./app')
 
-const defaults = require('../../env')
+const defaults = require('../env')
 
 function server (options = defaults) {
   return app(options).listen(options.port, err =>
