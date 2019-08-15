@@ -74,9 +74,9 @@ const rules = ({ isProd, extractCss }) => [
         fallback: 'file-loader',
         limit: fileLimit,
         name: (isProd)
-          ? 'assets/[hash].[ext]'
-          : 'assets/[path][name].[ext]',
-        publicPath: '/dist/'
+          ? 'dist/assets/[hash].[ext]'
+          : 'dist/assets/[path][name].[ext]',
+        publicPath: '/'
       }
     }
   },
@@ -161,18 +161,18 @@ module.exports = (env, argv) => {
         }
       },
       output: {
-        filename: '[name].js',
-        chunkFilename: '[name].js',
-        path: path.join(projectRoot, 'dist'),
-        publicPath: '/dist/'
+        filename: 'dist/[name].js',
+        chunkFilename: 'dist/[name].js',
+        path: projectRoot,
+        publicPath: '/'
       },
       plugins: [
         new DefinePlugin({
           __COMPOSITION_APP_ID__: JSON.stringify(appId)
         }),
         new MiniCssExtractPlugin({
-          filename: '[name].css',
-          chunkFilename: '[name].css'
+          filename: 'dist/[name].css',
+          chunkFilename: 'dist/[name].css'
         })
       ],
       resolve,
@@ -191,7 +191,7 @@ module.exports = (env, argv) => {
       output: {
         filename: 'build/[name].js',
         chunkFilename: 'build/[name].js',
-        path: path.join(projectRoot)
+        path: projectRoot
       },
       plugins: [
         new MiniCssExtractPlugin({
@@ -222,9 +222,9 @@ module.exports = (env, argv) => {
         rules: rules({ isProd })
       },
       output: {
-        filename: '[name].js',
+        filename: 'build/[name].js',
         libraryTarget: 'commonjs2',
-        path: path.join(projectRoot, 'build')
+        path: projectRoot
       },
       optimization,
       resolve,

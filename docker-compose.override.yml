@@ -9,6 +9,7 @@ services:
     volumes:
       - ./build:/opt/server/build:rw
       - ./dist:/opt/server/dist:rw
+      - ./resources:/opt/server/resources:ro
       - ./src:/opt/server/src:ro
 
   server:
@@ -22,3 +23,4 @@ services:
     volumes:
       - ./build:/opt/server/build:ro
       - ./dist:/opt/server/dist:ro
+      - ./resources:/opt/server/resources:ro
