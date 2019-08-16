@@ -73,7 +73,10 @@ export default async function renderSite ({
           readFile(path.join(projectRoot, 'dist', `${key}.css`))
             .then(data => {
               styles[key] = (
-                <style {...props} dangerouslySetInnerHTML={{ __html: data }} />
+                <style
+                  {...props}
+                  dangerouslySetInnerHTML={{ __html: data }}
+                />
               )
             })
             .catch(() => {
