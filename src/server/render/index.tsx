@@ -64,47 +64,54 @@ export default async function renderSite ({
 
   const styles = {}
   const Styles = ({ inline }) => {
-    const getStyleTag = (inline)
-      ? (key) => {
+    const getStyleTag = inline
+      ? key => {
         if (key in styles) {
           return styles[key]
         }
         promises.push(
           readFile(path.join(projectRoot, 'dist', `${key}.css`))
-            .then((data) => {
-              styles[key] = <style dangerouslySetInnerHTML={{ __html: data }} />
+            .then(data => {
+              styles[key] = (
+                <style dangerouslySetInnerHTML={{ __html: data }} />
+              )
             })
             .catch(() => {
               styles[key] = null
             })
         )
       }
-      : (key) =>
-        <link key={key} rel='stylesheet' type='text/css' href={`/dist/${key}.css`} />
+      : key => (
+        <link
+          key={key}
+          rel='stylesheet'
+          type='text/css'
+          href={`/dist/${key}.css`}
+        />
+      )
 
     return ['site', 'common', name]
       .map(getStyleTag)
       .concat(React.createElement(STYLED_COMPONENTS_PLACEHOLDER))
   }
 
-  const App = ({ appId: propId, static: isStatic, ...props }) =>
+  const App = ({ appId: propId, static: isStatic, ...props }) => (
     <>
-      { !isStatic &&
-        <Libs key='libs' />
-      }
+      {!isStatic && <Libs key='libs' />}
       <div id={propId || appId} key='app'>
         <StaticRouter context={context} location={location}>
           <Component {...props} user={user} />
         </StaticRouter>
       </div>
-      { !isStatic &&
+      {!isStatic && (
         <script
           dangerouslySetInnerHTML={{
             __html: `window.__STORE__=${JSON.stringify({ store })}`
           }}
         />
-        }
+      )}
     </>
+  )
 
   const props = {
     title: appTitle,
@@ -113,24 +120,24 @@ export default async function renderSite ({
   }
 
   const sheet = new ServerStyleSheet()
+  function renderHTML () {
+    return ReactDOM.renderToStaticMarkup(
+      sheet.collectStyles(<Site {...props} />)
+    )
+  }
+
+  async function renderAsync () {
+    let html = renderHTML()
+
+    if (promises.length) {
+      await Promise.all(promises)
+      html = renderHTML()
+    }
+
+    return html
+  }
+
   try {
-    function renderHTML () {
-      return ReactDOM.renderToStaticMarkup(
-        sheet.collectStyles(<Site {...props} />)
-      )
-    }
-
-    async function renderAsync () {
-      let html = renderHTML()
-
-      if (promises.length) {
-        await Promise.all(promises)
-        html = renderHTML()
-      }
-
-      return html
-    }
-
     const html: string = await renderAsync()
 
     if (context.url) {
