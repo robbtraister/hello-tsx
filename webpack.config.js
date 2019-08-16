@@ -12,7 +12,7 @@ const TerserWebpackPlugin = require('terser-webpack-plugin')
 const {
   appId,
   fileLimit,
-  isProd,
+  isProd: envProd,
   projectRoot
 } = require('./env')
 
@@ -126,6 +126,8 @@ const rules = ({ isProd, extractCss }) => [
 ]
 
 module.exports = (env, argv) => {
+  const isProd = envProd || /^prod/i.test(argv.mode)
+
   const devtool = (isProd)
     ? 'hidden-source-map'
     : 'eval-source-map'
@@ -201,12 +203,14 @@ module.exports = (env, argv) => {
         libraryTarget: 'commonjs2',
         path: projectRoot
       },
-      optimization,
       resolve,
       target: 'node',
       // these are set to enable proper source-map support
       devtool: 'source-map',
-      mode: 'development'
+      mode: 'development',
+      optimization: {
+        minimize: false
+      }
     },
     // this is just to generate CSS
     {
