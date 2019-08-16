@@ -1,9 +1,13 @@
 'use strict'
 
+import path from 'path'
+
 import React from 'react'
 import ReactDOM from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import { ServerStyleSheet } from 'styled-components'
+
+import { readFile } from '../utils/promises'
 
 import { Redirect } from '../errors'
 
@@ -22,10 +26,6 @@ const STYLED_COMPONENTS_PATTERN = new RegExp(
   'g'
 )
 
-const getCssLink = key => (
-  <link key={key} rel='stylesheet' type='text/css' href={`/dist/${key}.css`} />
-)
-
 const getScriptTag = key => (
   <script
     defer
@@ -39,11 +39,15 @@ export default async function renderSite ({
   appId,
   appTitle,
   location,
+  projectRoot,
+  store,
   user
 }: {
   appId: string
   appTitle?: string
   location: string
+  projectRoot: string
+  store?: object
   user?: object
 }) {
   const name: string = user ? 'app' : 'login'
@@ -51,36 +55,83 @@ export default async function renderSite ({
 
   const context: { url?: string } = {}
 
-  const App = ({ appId: propId, ...props }) => (
-    <div id={propId || appId}>
-      <StaticRouter context={context} location={location}>
-        <Component {...props} user={user} />
-      </StaticRouter>
-    </div>
-  )
+  const promises = []
 
   const Libs = () =>
     ['runtime', 'common', name]
       .map(getScriptTag)
       .concat(<script defer key='user' src='/auth/user?jsonp=setUser' />)
 
-  const Styles = () =>
-    ['site', 'common', name]
-      .map(getCssLink)
+  const styles = {}
+  const Styles = ({ inline }) => {
+    const getStyleTag = (inline)
+      ? (key) => {
+        if (key in styles) {
+          return styles[key]
+        }
+        promises.push(
+          readFile(path.join(projectRoot, 'dist', `${key}.css`))
+            .then((data) => {
+              styles[key] = <style dangerouslySetInnerHTML={{ __html: data }} />
+            })
+            .catch(() => {
+              styles[key] = null
+            })
+        )
+      }
+      : (key) =>
+        <link key={key} rel='stylesheet' type='text/css' href={`/dist/${key}.css`} />
+
+    return ['site', 'common', name]
+      .map(getStyleTag)
       .concat(React.createElement(STYLED_COMPONENTS_PLACEHOLDER))
+  }
+
+  const App = ({ appId: propId, static: isStatic, ...props }) =>
+    <>
+      { !isStatic &&
+        <Libs key='libs' />
+      }
+      <div id={propId || appId} key='app'>
+        <StaticRouter context={context} location={location}>
+          <Component {...props} user={user} />
+        </StaticRouter>
+      </div>
+      { !isStatic &&
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__STORE__=${JSON.stringify({ store })}`
+          }}
+        />
+        }
+    </>
 
   const props = {
     title: appTitle,
     App,
-    Libs,
     Styles
   }
 
   const sheet = new ServerStyleSheet()
   try {
-    const html: string = ReactDOM.renderToStaticMarkup(
-      sheet.collectStyles(<Site {...props} />)
-    )
+    function renderHTML () {
+      return ReactDOM.renderToStaticMarkup(
+        sheet.collectStyles(<Site {...props} />)
+      )
+    }
+
+    async function renderAsync () {
+      let html = renderHTML()
+
+      if (promises.length) {
+        await Promise.all(promises)
+        html = renderHTML()
+      }
+
+      return html
+    }
+
+    const html: string = await renderAsync()
 
     if (context.url) {
       throw new Redirect(context.url)

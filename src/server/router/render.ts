@@ -10,6 +10,7 @@ export default function (options) {
           appId: options.appId,
           appTitle: options.appTitle,
           location: req.originalUrl,
+          projectRoot: options.projectRoot,
           user: req.user
         })
       )

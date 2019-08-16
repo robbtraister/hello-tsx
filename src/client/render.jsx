@@ -1,6 +1,6 @@
 'use strict'
 
-/* global window, __COMPOSITION_APP_ID__ */
+/* global window, __DEFAULT_APP_ID__ */
 
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -17,8 +17,8 @@ window.setUser = function setUser (u) {
   user = u
 }
 
-function renderer (Component, appId = __COMPOSITION_APP_ID__) {
-  function render () {
+function render (Component, appId = __DEFAULT_APP_ID__) {
+  function renderComponent () {
     const targetElement = document.getElementById(appId)
 
     if (targetElement) {
@@ -29,7 +29,7 @@ function renderer (Component, appId = __COMPOSITION_APP_ID__) {
           user
         }
 
-        ReactDOM.render(
+        ReactDOM.hydrate(
           <ReactRouterDOM.BrowserRouter>
             <Component {...props} />
           </ReactRouterDOM.BrowserRouter>,
@@ -42,7 +42,7 @@ function renderer (Component, appId = __COMPOSITION_APP_ID__) {
     }
   }
 
-  window.document.addEventListener('DOMContentLoaded', render)
+  window.document.addEventListener('DOMContentLoaded', renderComponent)
 }
 
-export default renderer
+export default render

@@ -136,6 +136,7 @@ module.exports = (env, argv) => {
 
   return [
     {
+      name: 'client',
       devtool,
       entry: {
         app: path.resolve(__dirname, 'src', 'client', 'app'),
@@ -168,7 +169,7 @@ module.exports = (env, argv) => {
       },
       plugins: [
         new DefinePlugin({
-          __COMPOSITION_APP_ID__: JSON.stringify(appId)
+          __DEFAULT_APP_ID__: JSON.stringify(appId)
         }),
         new MiniCssExtractPlugin({
           filename: 'dist/[name].css',
@@ -178,34 +179,8 @@ module.exports = (env, argv) => {
       resolve,
       target: 'web'
     },
-    // this is just to generate CSS
     {
-      devtool,
-      entry: {
-        site: path.join(projectRoot, 'src', 'views', 'site')
-      },
-      mode,
-      module: {
-        rules: rules({ isProd, extractCss: true })
-      },
-      output: {
-        filename: 'build/[name].js',
-        chunkFilename: 'build/[name].js',
-        path: projectRoot
-      },
-      plugins: [
-        new MiniCssExtractPlugin({
-          filename: 'dist/[name].css',
-          chunkFilename: 'dist/[name].css'
-        }),
-        new OnBuildPlugin((stats) => {
-          exec(`rm -rf ${path.join(projectRoot, 'build', 'site.js*')}`, () => {})
-        })
-      ],
-      resolve,
-      target: 'node'
-    },
-    {
+      name: 'server',
       entry: {
         router: path.join(projectRoot, 'src', 'server', 'router')
       },
@@ -232,6 +207,34 @@ module.exports = (env, argv) => {
       // these are set to enable proper source-map support
       devtool: 'source-map',
       mode: 'development'
+    },
+    // this is just to generate CSS
+    {
+      name: 'server',
+      devtool,
+      entry: {
+        site: path.join(projectRoot, 'src', 'views', 'site')
+      },
+      mode,
+      module: {
+        rules: rules({ isProd, extractCss: true })
+      },
+      output: {
+        filename: 'build/[name].js',
+        chunkFilename: 'build/[name].js',
+        path: projectRoot
+      },
+      plugins: [
+        new MiniCssExtractPlugin({
+          filename: 'dist/[name].css',
+          chunkFilename: 'dist/[name].css'
+        }),
+        new OnBuildPlugin((stats) => {
+          exec(`rm -rf ${path.join(projectRoot, 'build', 'site.js*')}`, () => {})
+        })
+      ],
+      resolve,
+      target: 'node'
     }
   ]
 }

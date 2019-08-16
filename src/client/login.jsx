@@ -1,7 +1,7 @@
 'use strict'
 
-import renderer from './renderer'
+import render from './render'
 
 import Login from '../views/login'
 
-renderer(Login)
+render(Login)
