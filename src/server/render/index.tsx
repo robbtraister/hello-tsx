@@ -63,7 +63,7 @@ export default async function renderSite ({
       .concat(<script defer key='user' src='/auth/user?jsonp=setUser' />)
 
   const styles = {}
-  const Styles = ({ inline }) => {
+  const Styles = ({ inline, ...props }) => {
     const getStyleTag = inline
       ? key => {
         if (key in styles) {
@@ -73,7 +73,7 @@ export default async function renderSite ({
           readFile(path.join(projectRoot, 'dist', `${key}.css`))
             .then(data => {
               styles[key] = (
-                <style dangerouslySetInnerHTML={{ __html: data }} />
+                <style {...props} dangerouslySetInnerHTML={{ __html: data }} />
               )
             })
             .catch(() => {
@@ -83,6 +83,7 @@ export default async function renderSite ({
       }
       : key => (
         <link
+          {...props}
           key={key}
           rel='stylesheet'
           type='text/css'
@@ -100,7 +101,7 @@ export default async function renderSite ({
       {!isStatic && <Libs key='libs' />}
       <div id={propId || appId} key='app'>
         <StaticRouter context={context} location={location}>
-          <Component {...props} user={user} />
+          <Component {...props} user={user} store={store} />
         </StaticRouter>
       </div>
       {!isStatic && (
