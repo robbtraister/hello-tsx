@@ -23,9 +23,9 @@ export default function (options) {
   return [
     render,
     async (err, req, res, next) => {
-      if (err.status === 401) {
+      if (err && err.statusCode) {
         try {
-          res.status(err.status)
+          res.status(err.statusCode)
           await render(req, res, next)
         } catch (_) {
           // just propagate the original error

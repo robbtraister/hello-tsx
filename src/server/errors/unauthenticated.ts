@@ -1,10 +1,10 @@
 'use strict'
 
 export default class Unauthenticated extends Error {
-  status: number
+  statusCode: number
 
   constructor () {
     super('Unauthenticated')
-    this.status = 401
+    this.statusCode = 401
   }
 }

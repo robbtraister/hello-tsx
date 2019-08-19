@@ -201,6 +201,7 @@ module.exports = (env, argv) => {
       },
       resolve,
       stats: {
+        // ignore missing status code pages
         warnings: false
       },
       target: 'node',
@@ -244,6 +245,11 @@ module.exports = (env, argv) => {
         })
       ],
       resolve,
+      stats: {
+        // ignore missing site component
+        errors: false,
+        warnings: false
+      },
       target: 'node'
     }
   ]

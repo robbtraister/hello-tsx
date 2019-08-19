@@ -46,8 +46,7 @@ export default async function renderSite ({
   store?: object
   user?: object
 }) {
-  const Component = Pages[status] || Pages[200]
-
+  const Component = Pages[status]
   if (!Component) {
     throw new Error()
   }

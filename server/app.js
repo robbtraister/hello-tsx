@@ -65,7 +65,7 @@ function app (options) {
 
   app.use(
     function redirectHandler (err, req, res, next) {
-      if (err.location && err.status >= 300 && err.status < 400) {
+      if (err.location && err.statusCode >= 300 && err.statusCode < 400) {
         res.redirect(err.location)
       } else {
         next(err)
@@ -77,10 +77,10 @@ function app (options) {
     },
     options.isProd
       ? function failHandler (err, req, res, next) {
-        res.sendStatus(err.status || 500)
+        res.sendStatus(err.statusCode || 500)
       }
       : function failHandler (err, req, res, next) {
-        res.status(err.status || 500).send(err.message || err.body || err)
+        res.status(err.statusCode || 500).send(err.message || err.body || err)
       }
   )
 
