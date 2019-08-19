@@ -11,14 +11,8 @@ import { readFile } from '../utils/promises'
 
 import { Redirect } from '../errors'
 
-import App from '../../views/app'
-import Login from '../../views/login'
-import Site from '../../views/site'
-
-const Components = {
-  app: App,
-  login: Login
-}
+import Pages from './pages'
+import Site from './site'
 
 const STYLED_COMPONENTS_PLACEHOLDER = 'styled-components'
 const STYLED_COMPONENTS_PATTERN = new RegExp(
@@ -40,6 +34,7 @@ export default async function renderSite ({
   appTitle,
   location,
   projectRoot,
+  status,
   store,
   user
 }: {
@@ -47,11 +42,17 @@ export default async function renderSite ({
   appTitle?: string
   location: string
   projectRoot: string
+  status?: number
   store?: object
   user?: object
 }) {
-  const name: string = user ? 'app' : 'login'
-  const Component = Components[name]
+  const Component = Pages[status] || Pages[200]
+
+  if (!Component) {
+    throw new Error()
+  }
+
+  const name: string = Component.fileName
 
   const context: { url?: string } = {}
 

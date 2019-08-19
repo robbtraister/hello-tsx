@@ -11,6 +11,7 @@ export default function (options) {
           appTitle: options.appTitle,
           location: req.originalUrl,
           projectRoot: options.projectRoot,
+          status: res.statusCode || 200,
           user: req.user
         })
       )

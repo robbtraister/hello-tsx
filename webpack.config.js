@@ -26,16 +26,6 @@ class OnBuildPlugin {
   }
 }
 
-const optimization = {
-  minimizer: [
-    new TerserWebpackPlugin({
-      sourceMap: true
-    }),
-    new OptimizeCSSAssetsWebpackPlugin({
-    })
-  ]
-}
-
 const getAbsoluteRequire = (mod) =>
   require.resolve(mod).replace(new RegExp(`(/node_modules/${mod})/.*`), (_, m) => m)
 
@@ -149,7 +139,13 @@ module.exports = (env, argv) => {
         rules: rules({ isProd, extractCss: true })
       },
       optimization: {
-        ...optimization,
+        minimizer: [
+          new TerserWebpackPlugin({
+            sourceMap: true
+          }),
+          new OptimizeCSSAssetsWebpackPlugin({
+          })
+        ],
         runtimeChunk: {
           name: 'runtime'
         },
@@ -204,12 +200,16 @@ module.exports = (env, argv) => {
         path: projectRoot
       },
       resolve,
+      stats: {
+        warnings: false
+      },
       target: 'node',
       // these are set to enable proper source-map support
       devtool: 'source-map',
       mode: 'development',
       optimization: {
-        minimize: false
+        minimize: false,
+        splitChunks: false
       }
     },
     // this is just to generate CSS
@@ -222,6 +222,12 @@ module.exports = (env, argv) => {
       mode,
       module: {
         rules: rules({ isProd, extractCss: true })
+      },
+      optimization: {
+        minimizer: [
+          new OptimizeCSSAssetsWebpackPlugin({
+          })
+        ]
       },
       output: {
         filename: 'build/[name].js',
