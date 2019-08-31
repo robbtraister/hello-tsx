@@ -1,5 +1,7 @@
 'use strict'
 
+import path from 'path'
+
 import renderSite from '../render'
 
 export default function (options) {
@@ -35,6 +37,14 @@ export default function (options) {
       } else {
         next(err)
       }
+    },
+    (req, res, next) => {
+      res.sendFile(
+        path.join(options.projectRoot, 'dist', 'index.html'),
+        err => {
+          if (err) next()
+        }
+      )
     }
   ]
 }

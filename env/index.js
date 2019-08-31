@@ -29,7 +29,12 @@ const google = process.env.GOOGLE_CLIENT_ID
 const port = Number(process.env.PORT) || Number(configs.port) || 8080
 
 module.exports = {
-  appId: process.env.APP_ID || configs.appId || 'app',
+  app: {
+    fileLimit:
+      Number(process.env.FILE_LIMIT) || Number(configs.fileLimit) || 16 * 1024,
+    id: process.env.APP_ID || (configs.app && configs.app.id) || 'app',
+    title: process.env.APP_TITLE || (configs.app && configs.app.title) || ''
+  },
   auth: {
     cookie:
       process.env.COOKIE ||
@@ -38,8 +43,6 @@ module.exports = {
     secret: process.env.SECRET,
     google
   },
-  fileLimit:
-    Number(process.env.FILE_LIMIT) || Number(configs.fileLimit) || 16 * 1024,
   host: process.env.HOST || configs.host || `http://localhost:${port}`,
   isProd,
   port,
