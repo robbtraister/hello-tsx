@@ -7,12 +7,12 @@ import ReactDOM from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import { ServerStyleSheet } from 'styled-components'
 
-import { readFile } from '../utils/promises'
-
 import { Redirect } from '../errors'
 
 import Pages from './pages'
 import Site from './site'
+
+import { readFile } from '../../utils/promises'
 
 const STYLED_COMPONENTS_PLACEHOLDER = 'styled-components'
 const STYLED_COMPONENTS_PATTERN = new RegExp(
@@ -58,7 +58,7 @@ export default async function renderSite ({
   const promises = []
 
   const Libs = () =>
-    ['runtime', 'common', name]
+    ['runtime', 'engine', 'common', name]
       .map(getScriptTag)
       .concat(<script defer key='user' src='/auth/user?jsonp=setUser' />)
 

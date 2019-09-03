@@ -38,6 +38,7 @@
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
+    "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.5.5",
@@ -46,18 +47,18 @@
     "@babel/preset-typescript": "^7.3.3",
     "@types/jest": "^24.0.18",
     "@types/react": "^16.9.2",
-    "@typescript-eslint/eslint-plugin": "^2.0.0",
-    "@typescript-eslint/parser": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^2.1.0",
+    "@typescript-eslint/parser": "^2.1.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
-    "husky": "^3.0.4",
+    "husky": "^3.0.5",
     "jest": "^24.9.0",
     "json-loader": "^0.5.7",
     "mini-css-extract-plugin": "^0.8.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
-    "prettier-standard": "^13.0.6",
+    "prettier-standard": "^14.0.3",
     "sass": "^1.22.10",
     "sass-loader": "^8.0.0",
     "script-ext-html-webpack-plugin": "^2.1.4",
@@ -68,6 +69,9 @@
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
     "yaml-loader": "^0.5.0"
+  },
+  "bin": {
+    "tsx": "./bin/cli.js"
   },
   "husky": {
     "hooks": {

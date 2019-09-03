@@ -13,11 +13,12 @@ const TerserWebpackPlugin = require('terser-webpack-plugin')
 
 const {
   app: {
-    fileLimit,
     id: appId,
-    title: appTitle
+    title: appTitle,
+    fileLimit
   },
   isProd: envProd,
+  packageRoot,
   projectRoot
 } = require('./env')
 
@@ -39,6 +40,7 @@ const resolve = {
     'prop-types': getAbsoluteRequire('prop-types'),
     react: getAbsoluteRequire('react'),
     'react-dom': getAbsoluteRequire('react-dom'),
+    'react-router': getAbsoluteRequire('react-router'),
     'react-router-dom': getAbsoluteRequire('react-router-dom'),
     'styled-components': getAbsoluteRequire('styled-components'),
     '~': projectRoot,
@@ -136,8 +138,51 @@ module.exports = (env, argv) => {
       name: 'client',
       devtool,
       entry: {
-        app: path.resolve(__dirname, 'src', 'client', 'app'),
-        login: path.resolve(__dirname, 'src', 'client', 'login')
+        engine: path.resolve(__dirname, 'src', 'client', 'engine')
+      },
+      mode,
+      module: {
+        rules: rules({ isProd })
+      },
+      optimization: {
+        minimizer: [
+          new TerserWebpackPlugin({
+            sourceMap: true
+          })
+        ],
+        chunkIds: 'named',
+        moduleIds: 'named',
+        runtimeChunk: {
+          name: 'runtime'
+        }
+      },
+      output: {
+        filename: 'dist/[name].js',
+        chunkFilename: 'dist/[name].js',
+        path: projectRoot,
+        publicPath: '/'
+      },
+      plugins: [
+        new DefinePlugin({
+          __DEFAULT_APP_ID__: JSON.stringify(appId)
+        })
+      ],
+      resolve,
+      target: 'web'
+    },
+    {
+      name: 'client',
+      devtool,
+      entry: {
+        app: path.resolve(projectRoot, 'src', 'views', 'app'),
+        login: path.resolve(projectRoot, 'src', 'views', 'login')
+      },
+      externals: {
+        'prop-types': 'PropTypes',
+        react: 'React',
+        'react-dom': 'ReactDOM',
+        'react-router': 'ReactRouterDOM',
+        'react-router-dom': 'ReactRouterDOM'
       },
       mode,
       module: {
@@ -151,6 +196,8 @@ module.exports = (env, argv) => {
           new OptimizeCSSAssetsWebpackPlugin({
           })
         ],
+        chunkIds: 'named',
+        moduleIds: 'named',
         runtimeChunk: {
           name: 'runtime'
         },
@@ -158,22 +205,31 @@ module.exports = (env, argv) => {
           chunks: 'all',
           minSize: 0,
           name (mod, chunks, cacheGroupKey) {
-            return (chunks.length > 1)
+            const chunkNames = Object.keys(
+              chunks
+                .map((chunk) => chunk.name)
+                .reduce((map, name) => {
+                  map[name] = true
+                  return map
+                }, {})
+            )
+            return (chunkNames.length > 1)
               ? 'common'
-              : chunks[0].name
+              : chunkNames[0]
           }
         }
       },
       output: {
         filename: 'dist/[name].js',
         chunkFilename: 'dist/[name].js',
+        globalObject: "(typeof self !== 'undefined' ? self : this)",
+        library: ['window', 'App'],
+        libraryExport: 'default',
+        libraryTarget: 'var',
         path: projectRoot,
         publicPath: '/'
       },
       plugins: [
-        new DefinePlugin({
-          __DEFAULT_APP_ID__: JSON.stringify(appId)
-        }),
         new MiniCssExtractPlugin({
           filename: 'dist/[name].css',
           chunkFilename: 'dist/[name].css'
@@ -196,12 +252,12 @@ module.exports = (env, argv) => {
     {
       name: 'server',
       entry: {
-        router: path.join(projectRoot, 'src', 'server', 'router')
+        router: path.join(packageRoot, 'src', 'server', 'router')
       },
       externals: [
         function (context, request, callback) {
           if (/^[a-z@]/i.test(request)) {
-            callback(null, `commonjs ${require.resolve(request)}`)
+            callback(null, `commonjs ${request}`)
           } else {
             callback()
           }

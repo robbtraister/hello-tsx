@@ -2,27 +2,21 @@
 
 const React = require('react')
 
-const unpack = mod => (mod && mod.__esModule && mod.default ? mod.default : mod)
+const { unpack } = require('../../utils')
 
-function getSite () {
-  try {
-    return unpack(require('../../views/site'))
-  } catch (e) {
-    const Site = ({ App, Styles }) => (
-      <html>
-        <head>
-          <Styles />
-        </head>
-        <body>
-          <App />
-        </body>
-      </html>
-    )
-    return Site
-  }
-}
+try {
+  module.exports = unpack(require('~/src/views/site'))
+} catch (_) {
+  const Site = ({ App, Styles }) => (
+    <html>
+      <head>
+        <Styles />
+      </head>
+      <body>
+        <App />
+      </body>
+    </html>
+  )
 
-module.exports = {
-  __esModule: true,
-  default: getSite()
+  module.exports = Site
 }

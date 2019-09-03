@@ -1,9 +1,22 @@
 'use strict'
 
+const fs = require('fs')
 const path = require('path')
 
+function getProjectRoot (base = '.') {
+  if (fs.existsSync(path.join(base, 'package.json'))) {
+    return path.resolve(base)
+  }
+  const nextBase = path.resolve(base, '..')
+  if (nextBase === base) {
+    return false
+  }
+  return getProjectRoot(nextBase)
+}
+
+const packageRoot = path.resolve(__dirname, '..')
 const projectRoot = path.resolve(
-  process.env.PROJECT_ROOT || path.join(__dirname, '..')
+  process.env.PROJECT_ROOT || getProjectRoot('.') || '.'
 )
 
 require('dotenv').config({ path: path.join(projectRoot, '.env') })
@@ -45,6 +58,7 @@ module.exports = {
   },
   host: process.env.HOST || configs.host || `http://localhost:${port}`,
   isProd,
+  packageRoot,
   port,
   projectRoot,
   workerCount:

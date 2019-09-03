@@ -9,8 +9,8 @@ export default function (options) {
     try {
       res.send(
         await renderSite({
-          appId: options.appId,
-          appTitle: options.appTitle,
+          appId: options.app.id,
+          appTitle: options.app.title,
           location: req.originalUrl,
           projectRoot: options.projectRoot,
           status: res.statusCode || 200,

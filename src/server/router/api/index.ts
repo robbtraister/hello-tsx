@@ -1,9 +1,12 @@
 'use strict'
 
-import { Router } from 'express'
+const { unpack } = require('../../../utils')
 
-export default function api (options) {
-  const router = Router()
-
-  return router
+module.exports = {
+  __esModule: true,
+  default: options => []
 }
+
+try {
+  module.exports.default = unpack(require('~/src/server/router/api'))
+} catch (_) {}

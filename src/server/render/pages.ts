@@ -1,6 +1,6 @@
 'use strict'
 
-const unpack = mod => (mod && mod.__esModule && mod.default ? mod.default : mod)
+const { unpack } = require('../../utils')
 
 const attachName = (mod, name) => {
   const page = unpack(mod)
@@ -11,30 +11,27 @@ const attachName = (mod, name) => {
 const Pages = {}
 
 try {
-  Pages[200] = attachName(require('../../views/200'), '200')
+  Pages[200] = attachName(require('~/src/views/200'), '200')
 } catch (e) {}
 
 try {
-  Pages[200] = attachName(require('../../views/app'), 'app')
+  Pages[200] = attachName(require('~/src/views/app'), 'app')
 } catch (e) {}
 
 try {
-  Pages[401] = attachName(require('../../views/401'), '401')
+  Pages[401] = attachName(require('~/src/views/401'), '401')
 } catch (e) {}
 
 try {
-  Pages[401] = attachName(require('../../views/login'), 'login')
+  Pages[401] = attachName(require('~/src/views/login'), 'login')
 } catch (e) {}
 
 try {
-  Pages[403] = attachName(require('../../views/403'), '403')
+  Pages[403] = attachName(require('~/src/views/403'), '403')
 } catch (e) {}
 
 try {
-  Pages[404] = attachName(require('../../views/404'), '404')
+  Pages[404] = attachName(require('~/src/views/404'), '404')
 } catch (e) {}
 
-module.exports = {
-  __esModule: true,
-  default: Pages
-}
+module.exports = Pages
