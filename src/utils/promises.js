@@ -1,5 +1,12 @@
 'use strict'
 
+/**
+ * this module is used in both bin/ and src/
+ * to work in bin/, it must use node-native commonjs syntax
+ * but when used in src/, the @babel/transform-runtime plugin treats async/await syntax as an ES6 module
+ * in order to make it work in both environments, we have to use standard Promise syntax
+ */
+
 const childProcess = require('child_process')
 const fs = require('fs')
 const path = require('path')
