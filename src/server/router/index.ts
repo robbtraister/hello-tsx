@@ -8,7 +8,7 @@ import render from './render'
 export default function router (options) {
   return [].concat(
     assets(options),
-    auth(options),
+    options.auth === false ? [] : auth(options),
     api(options),
     render(options)
   )

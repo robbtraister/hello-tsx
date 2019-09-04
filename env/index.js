@@ -48,14 +48,16 @@ module.exports = {
     id: process.env.APP_ID || (configs.app && configs.app.id) || 'app',
     title: process.env.APP_TITLE || (configs.app && configs.app.title) || ''
   },
-  auth: {
-    cookie:
-      process.env.COOKIE ||
-      (configs.auth && configs.auth.cookie) ||
-      'jwt-token',
-    secret: process.env.SECRET,
-    google
-  },
+  auth: /^(false|off)$/i.test(process.env.AUTH)
+    ? false
+    : {
+      cookie:
+          process.env.COOKIE ||
+          (configs.auth && configs.auth.cookie) ||
+          'jwt-token',
+      secret: process.env.SECRET,
+      google
+    },
   host: process.env.HOST || configs.host || `http://localhost:${port}`,
   isProd,
   packageRoot,
