@@ -33,16 +33,19 @@ class OnBuildPlugin {
 }
 
 const getAbsoluteRequire = (mod) =>
-  require.resolve(mod).replace(new RegExp(`(/node_modules/${mod})/.*`), (_, m) => m)
+  path.resolve(__dirname, 'node_modules', mod)
 
 const resolve = {
   alias: {
-    'prop-types': getAbsoluteRequire('prop-types'),
-    react: getAbsoluteRequire('react'),
-    'react-dom': getAbsoluteRequire('react-dom'),
+    ...Object.keys(require('./package.json').dependencies)
+      .reduce((alias, dep) => {
+        try {
+          alias[dep] = getAbsoluteRequire(dep)
+        } catch (_) {}
+        return alias
+      }, {}),
+    // react-router is a dependency of react-router-dom, so not specified in package.json
     'react-router': getAbsoluteRequire('react-router'),
-    'react-router-dom': getAbsoluteRequire('react-router-dom'),
-    'styled-components': getAbsoluteRequire('styled-components'),
     '~': projectRoot,
     '@': path.join(projectRoot, 'src', 'views', 'app')
   },
@@ -111,7 +114,7 @@ const rules = ({ isProd, extractCss }) => [
   },
   {
     test: /\.m?[jt]sx?$/,
-    exclude: /[\\/]node_modules[\\/](?!@composition[\\/])/,
+    exclude: /[\\/]node_modules[\\/]/,
     use: {
       loader: 'babel-loader',
       options: {
@@ -121,6 +124,10 @@ const rules = ({ isProd, extractCss }) => [
     }
   }
 ]
+
+const watchOptions = {
+  ignored: /[\\/]node_modules[\\/]/
+}
 
 module.exports = (env, argv) => {
   const isProd = envProd || /^prod/i.test(argv.mode)
@@ -168,7 +175,8 @@ module.exports = (env, argv) => {
         })
       ],
       resolve,
-      target: 'web'
+      target: 'web',
+      watchOptions
     },
     {
       name: 'client',
@@ -247,7 +255,8 @@ module.exports = (env, argv) => {
         })
       ],
       resolve,
-      target: 'web'
+      target: 'web',
+      watchOptions
     },
     {
       name: 'server',
@@ -257,7 +266,10 @@ module.exports = (env, argv) => {
       externals: [
         function (context, request, callback) {
           if (/^[a-z@]/i.test(request)) {
-            callback(null, `commonjs ${request}`)
+            const match = /^((@[^/]+\/)?[^/]+)(\/.+)?/.exec(request)
+            const mod = match[1]
+            const addendum = match[3]
+            callback(null, `commonjs ${resolve.alias[mod] || mod}${addendum || ''}`)
           } else {
             callback()
           }
@@ -277,6 +289,7 @@ module.exports = (env, argv) => {
         warnings: false
       },
       target: 'node',
+      watchOptions,
       // these are set to enable proper source-map support
       devtool: 'source-map',
       mode: 'development',
@@ -322,7 +335,8 @@ module.exports = (env, argv) => {
         errors: false,
         warnings: false
       },
-      target: 'node'
+      target: 'node',
+      watchOptions
     }
   ]
 }
