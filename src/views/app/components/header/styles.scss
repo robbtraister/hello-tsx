@@ -1,0 +1,21 @@
+
+.container {
+  display: flex;
+  margin: 20px auto;
+  width: 960px;
+
+  .logo {
+    font-size: 26px;
+    margin-right: auto;
+    text-decoration: none;
+
+    .hello {
+      color: #09e;
+    }
+
+    .wallet {
+      color: #666;
+      font-weight: bold;
+    }
+  }
+}

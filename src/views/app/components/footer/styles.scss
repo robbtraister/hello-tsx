@@ -1,0 +1,17 @@
+
+.container {
+  margin: 20px auto;
+  padding-bottom: 20px;
+  width: 960px;
+}
+
+.section {
+  border-left: 1px solid #008;
+  text-align: center;
+  width: 33%;
+  float: left;
+
+  &:first-child {
+    border-left: 0;
+  }
+}

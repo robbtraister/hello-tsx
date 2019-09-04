@@ -7,6 +7,8 @@ import renderSite from '../render'
 export default function (options) {
   async function render (req, res, next) {
     try {
+      const user = req.user
+
       res.send(
         await renderSite({
           appId: options.app.id,
@@ -14,7 +16,7 @@ export default function (options) {
           location: req.originalUrl,
           projectRoot: options.projectRoot,
           status: res.statusCode || 200,
-          user: req.user
+          user
         })
       )
     } catch (err) {

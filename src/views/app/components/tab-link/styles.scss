@@ -1,0 +1,19 @@
+.tab {
+  border-radius: 5px;
+  color: #444;
+  cursor: pointer;
+  margin-left: 5px;
+  padding: 5px 8px;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &:hover {
+    background-color: #eec;
+  }
+
+  &:global(.active) {
+    background-color: #fff;
+    color: #bb6;
+    cursor: default;
+  }
+}

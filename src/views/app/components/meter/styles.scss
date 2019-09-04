@@ -1,0 +1,58 @@
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  fill: none;
+  stroke: #09e;
+  stroke-width: 5;
+  animation: spinner 2s linear infinite;
+}
+
+.gauge {
+  fill: none;
+  stroke-width: 20;
+  transform: rotate(-45deg);
+
+  .bad {
+    stroke: #f80;
+  }
+
+  .ok {
+    stroke: #ff0;
+  }
+
+  .good {
+    stroke: #0f0;
+  }
+}
+
+.text {
+  fill: #444;
+  text-anchor: middle;
+}
+
+g.banner {
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+text.banner {
+  fill: #fff;
+  font-size: 18;
+  font-weight: 100;
+  text-anchor: middle;
+  text-transform: uppercase;
+}
+
+.tick {
+  fill: #444;
+  stroke: #fff;
+  stroke-width: 2;
+}

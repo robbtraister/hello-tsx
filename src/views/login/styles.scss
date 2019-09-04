@@ -1,0 +1,19 @@
+.link {
+  border-radius: 3px;
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  width: 300px;
+
+  &.facebook {
+    background-color: #44f;
+    color: #eee;
+  }
+
+  &.google {
+    background-color: #f00;
+    color: #fff;
+  }
+}

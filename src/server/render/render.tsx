@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import { ServerStyleSheet } from 'styled-components'
 
+import { guidance, profile, score, txs } from '../api'
 import { Redirect } from '../errors'
 
 import Pages from './pages'
@@ -35,7 +36,6 @@ export default async function renderSite ({
   location,
   projectRoot,
   status,
-  store,
   user
 }: {
   appId: string
@@ -43,12 +43,18 @@ export default async function renderSite ({
   location: string
   projectRoot: string
   status?: number
-  store?: object
   user?: object
 }) {
   const Component = Pages[status]
   if (!Component) {
     throw new Error()
+  }
+
+  const store = {
+    guidance: guidance(user),
+    profile: profile(user),
+    score: score(user),
+    txs: txs(user)
   }
 
   const name: string = Component.fileName
@@ -60,7 +66,14 @@ export default async function renderSite ({
   const Libs = () =>
     ['runtime', 'engine', 'common', name]
       .map(getScriptTag)
-      .concat(<script defer key='user' src='/auth/user?jsonp=setUser' />)
+      .concat(
+        <script
+          defer
+          key='user'
+          type='application/javascript'
+          src='/auth/user?jsonp=setUser'
+        />
+      )
 
   const styles = {}
   const Styles = ({ inline, ...props }) => {

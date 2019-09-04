@@ -1,17 +1,37 @@
 'use strict'
 
-const { unpack } = require('../../../utils')
+import { Router } from 'express'
 
-module.exports = {
-  __esModule: true,
-  default: options => []
+import { guidance, profile, score, txs } from '../../api'
+
+function api (options) {
+  const router = Router()
+
+  router.get('/guidance', (req, res, next) => {
+    res.send({ guidance: guidance(req.user) })
+  })
+
+  router.get('/profile', (req, res, next) => {
+    res.send({ profile: profile(req.user) })
+  })
+
+  router.get('/score', (req, res, next) => {
+    res.send({ score: score(req.user) })
+  })
+
+  router.get('/txs', (req, res, next) => {
+    res.send({ txs: txs(req.user) })
+  })
+
+  return router
 }
 
-try {
-  /**
-   * if used in a fork, this import will loopback on itself
-   * we have to define the export above to ensure that it is available before making this request
-   * if using the CLI, this will attempt to load a project-specific api module
-   */
-  module.exports.default = unpack(require('~/src/server/router/api'))
-} catch (_) {}
+export function router (options) {
+  const router = Router()
+
+  router.use('/api', api(options))
+
+  return router
+}
+
+export default router
