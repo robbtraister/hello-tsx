@@ -27,13 +27,9 @@ export default function (options) {
     async (err, req, res, next) => {
       // ignore redirect errors
       if (err && err.statusCode && err.statusCode >= 400) {
-        try {
-          res.status(err.statusCode)
-          await render(req, res, next)
-        } catch (_) {
-          // just propagate the original error
-          next(err)
-        }
+        res.status(err.statusCode)
+        // just propagate the original error
+        await render(req, res, () => next(err))
       } else {
         next(err)
       }
