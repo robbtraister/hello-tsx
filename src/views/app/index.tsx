@@ -61,7 +61,7 @@ const App = props => {
         {allowed.map(name => {
           return <Route path={`/${name}`} key={name} render={getScene(name)} />
         })}
-        <Route path={`/profile`} render={getScene('profile')} />
+        <Route path='/profile' render={getScene('profile')} />
         <Route path='/' component={GoHome} />
       </Switch>
     </Layout>
