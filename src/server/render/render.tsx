@@ -110,7 +110,7 @@ export default async function renderSite ({
       {!isStatic && (
         <script
           dangerouslySetInnerHTML={{
-            __html: `window.__STORE__=${JSON.stringify({ store })}`
+            __html: `window.__DATA__=${JSON.stringify({ store })}`
           }}
         />
       )}
