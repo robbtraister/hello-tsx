@@ -11,6 +11,7 @@ import { Redirect } from '../errors'
 
 import Pages from './pages'
 import Site from './site'
+import Store from './store'
 
 import { readFile } from '../../utils/promises'
 
@@ -35,7 +36,6 @@ export default async function renderSite ({
   location,
   projectRoot,
   status,
-  store,
   user
 }: {
   appId: string
@@ -43,7 +43,6 @@ export default async function renderSite ({
   location: string
   projectRoot: string
   status?: number
-  store?: object
   user?: object
 }) {
   const Component = Pages[status]
@@ -56,6 +55,8 @@ export default async function renderSite ({
   const context: { url?: string } = {}
 
   const promises = []
+
+  const store = Store({ user, location })
 
   const Libs = () =>
     ['runtime', 'engine', 'common', name]
