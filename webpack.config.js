@@ -1,6 +1,6 @@
 'use strict'
 
-const { exec } = require('child_process')
+const fs = require('fs')
 const path = require('path')
 
 const { DefinePlugin } = require('webpack')
@@ -11,11 +11,13 @@ const OptimizeCSSAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 
+const { exec } = require('./src/utils/promises')
+
 const {
   app: {
     id: appId,
-    title: appTitle,
-    fileLimit
+    fileLimit,
+    title: appTitle
   },
   isProd: envProd,
   packageRoot,
@@ -82,12 +84,8 @@ const rules = ({ isProd, extractCss }) => [
   },
   {
     test: /\.s?[ac]ss$/,
-    use: (
-      (extractCss)
-        ? [{ loader: MiniCssExtractPlugin.loader }]
-        : []
-    ).concat(
-      {
+    use: (extractCss ? [{ loader: MiniCssExtractPlugin.loader }] : [])
+      .concat({
         loader: 'css-loader',
         options: {
           modules: {
@@ -96,8 +94,7 @@ const rules = ({ isProd, extractCss }) => [
           onlyLocals: !extractCss,
           sourceMap: true
         }
-      }
-    )
+      })
   },
   {
     test: /\.s[ac]ss$/,
@@ -128,6 +125,8 @@ const rules = ({ isProd, extractCss }) => [
 const watchOptions = {
   ignored: /[\\/]node_modules[\\/]/
 }
+
+const indexTemplate = path.join(projectRoot, 'src', 'views', 'index.html')
 
 module.exports = (env, argv) => {
   const isProd = envProd || /^prod/i.test(argv.mode)
@@ -201,8 +200,7 @@ module.exports = (env, argv) => {
           new TerserWebpackPlugin({
             sourceMap: true
           }),
-          new OptimizeCSSAssetsWebpackPlugin({
-          })
+          new OptimizeCSSAssetsWebpackPlugin({})
         ],
         chunkIds: 'named',
         moduleIds: 'named',
@@ -242,17 +240,23 @@ module.exports = (env, argv) => {
           filename: 'dist/[name].css',
           chunkFilename: 'dist/[name].css'
         }),
-        new HtmlWebpackPlugin({
-          excludeChunks: ['login'],
-          filename: 'dist/index.html',
-          appId,
-          inject: 'head',
-          template: path.join(projectRoot, 'src', 'views', 'index.html'),
-          title: appTitle
-        }),
-        new ScriptExtHtmlWebpackPlugin({
-          defaultAttribute: 'defer'
-        })
+        ...(
+          fs.existsSync(indexTemplate)
+            ? [
+              new HtmlWebpackPlugin({
+                excludeChunks: ['login'],
+                filename: 'dist/index.html',
+                appId,
+                inject: 'head',
+                template: indexTemplate,
+                title: appTitle
+              }),
+              new ScriptExtHtmlWebpackPlugin({
+                defaultAttribute: 'defer'
+              })
+            ]
+            : []
+        )
       ],
       resolve,
       target: 'web',
@@ -311,8 +315,7 @@ module.exports = (env, argv) => {
       },
       optimization: {
         minimizer: [
-          new OptimizeCSSAssetsWebpackPlugin({
-          })
+          new OptimizeCSSAssetsWebpackPlugin({})
         ]
       },
       output: {
@@ -325,8 +328,8 @@ module.exports = (env, argv) => {
           filename: 'dist/[name].css',
           chunkFilename: 'dist/[name].css'
         }),
-        new OnBuildPlugin((stats) => {
-          exec(`rm -rf ${path.join(projectRoot, 'build', 'site.js*')}`, () => {})
+        new OnBuildPlugin(async (stats) => {
+          return exec(`rm -rf ${path.join(projectRoot, 'build', 'site.js*')}`)
         })
       ],
       resolve,
