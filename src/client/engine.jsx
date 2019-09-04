@@ -23,7 +23,6 @@ function render (
   Component,
   targetElement = document.getElementById(__DEFAULT_APP_ID__)
 ) {
-  console.log(Component, __DEFAULT_APP_ID__, targetElement)
   if (Component && targetElement) {
     const originalHTML = targetElement.innerHTML
 
