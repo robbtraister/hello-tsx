@@ -97,13 +97,13 @@ export default class Meter extends PureComponent {
 
     const svg = d3.select(this.svg.current)
 
-    const { value } = this.props
-    const percent = value / this.props.total
+    const { duration = 1500, total, value } = this.props
+    const percent = value / total
 
     svg
       .select('.value')
       .transition()
-      .duration(1500)
+      .duration(duration)
       .tween('text', function () {
         return function (t) {
           this.textContent = Math.round(value * t)
@@ -113,7 +113,7 @@ export default class Meter extends PureComponent {
     svg
       .select(`.${styles.tick}`)
       .transition()
-      .duration(1500)
+      .duration(duration)
       .ease(d3.easeBounce)
       .attrTween('transform', () => t => `rotate(${getRotation(percent * t)})`)
   }

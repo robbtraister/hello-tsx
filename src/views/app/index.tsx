@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from 'react-router'
 
 import Layout from './components/layout'
 import Loading from './components/loading'
+import { Store } from './components/store'
 import Title from './components/title'
 
 import Accounts from './scenes/accounts'
@@ -56,15 +57,19 @@ const App = props => {
   }
 
   return (
-    <Layout store={store} tabs={allowed}>
-      <Switch>
-        {allowed.map(name => {
-          return <Route path={`/${name}`} key={name} render={getScene(name)} />
-        })}
-        <Route path='/profile' render={getScene('profile')} />
-        <Route path='/' component={GoHome} />
-      </Switch>
-    </Layout>
+    <Store store={store}>
+      <Layout tabs={allowed}>
+        <Switch>
+          {allowed.map(name => {
+            return (
+              <Route path={`/${name}`} key={name} render={getScene(name)} />
+            )
+          })}
+          <Route path='/profile' render={getScene('profile')} />
+          <Route path='/' component={GoHome} />
+        </Switch>
+      </Layout>
+    </Store>
   )
 }
 
