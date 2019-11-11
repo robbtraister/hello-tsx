@@ -1,0 +1,174 @@
+@import '../constants.scss';
+
+.nav {
+  background-color: $nav-background;
+  padding: 10px 20px;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+
+  .container {
+    margin: 0 auto;
+    max-width: $max-width + 10;
+    display: flex;
+
+    .hamburger {
+      display: none;
+    }
+
+    .logo {
+      display: inline-block;
+      font-size: 24px;
+      font-weight: bold;
+      margin-right: auto;
+
+      .hello {
+        display: inline-block;
+        color: $app-background;
+      }
+      .wallet {
+        display: inline-block;
+        color: #555;
+      }
+    }
+
+    .menu {
+      .shade {
+        display: none;
+      }
+
+      .tabs {
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .tab {
+      display: inline-block;
+      list-style-type: none;
+      margin-left: 5px;
+
+      a {
+        border-radius: 5px;
+        color: $tab-color;
+        display: inline-block;
+        padding: 5px 7px;
+        text-transform: uppercase;
+
+        &:hover {
+          background-color: $hover-tab-background;
+          color: $hover-tab-color;
+        }
+
+        &:global(.active) {
+          background-color: $nav-background;
+          color: $active-tab-color;
+          cursor: auto;
+        }
+      }
+
+      &.profile a {
+        background-color: #3a3;
+        border-radius: 5px;
+        color: #fff;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $mobile-width) {
+  .nav {
+    position: fixed;
+
+    .container {
+      .hamburger {
+        background: repeating-linear-gradient(
+          0,
+          #555 0px,
+          #555 2px,
+          transparent 2px,
+          transparent 5px
+        );
+        border: 4px solid #fff;
+        border-radius: 2px;
+        display: inline-block;
+        margin: 3px 5px 3px 0;
+        height: 12px;
+        width: 12px;
+
+        &.open {
+          background: repeating-linear-gradient(
+            0,
+            transparent 0px,
+            transparent 2px,
+            #555 2px,
+            #555 5px
+          );
+          border-color: #555;
+        }
+      }
+
+      .menu {
+        position: fixed;
+        top: 48px;
+        left: -100%;
+        width: 100%;
+        bottom: 0;
+        transition: left $transition-zero $menu-duration;
+
+        .shade {
+          display: block;
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          opacity: 0;
+          background-color: #000;
+          transition: opacity $menu-duration;
+        }
+
+        .tabs {
+          background-color: $dashboard-background;
+          bottom: 0;
+          border-top: 10px solid $tab-color;
+          flex-direction: column;
+          left: -50%;
+          position: absolute;
+          top: 0;
+          transition: left $menu-duration;
+          width: 50%;
+
+          .tab a {
+            padding: 10px;
+          }
+        }
+
+        &.open {
+          left: 0;
+          transition: left $transition-zero $transition-zero;
+
+          .shade {
+            opacity: 0.4;
+          }
+
+          .tabs {
+            left: 0;
+          }
+        }
+      }
+
+      .tab {
+        display: block;
+        margin-left: 0;
+
+        a {
+          border-radius: 0;
+          display: block;
+        }
+      }
+    }
+  }
+}

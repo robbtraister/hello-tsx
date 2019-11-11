@@ -3,28 +3,25 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import styles from './styles.scss'
+import Body from './components/body'
+import Footer from './components/footer'
+import Nav from './components/nav'
+import Router from './router'
 
-class App extends React.Component {
-  static propTypes: any;
-  props: {
-    user?: any
-  }
+import userContext from './contexts/user'
 
-  componentDidMount () {
-    console.log('mounted!')
-  }
-
-  render () {
-    const { user } = this.props
-    const name = (user && user.name) || 'World'
-    return <div className={styles.red}>Hello, {name}!</div>
-  }
-}
+const App = () =>
+  <userContext.Provider value={null}>
+    <Nav />
+    <Body>
+      <Router />
+    </Body>
+    <Footer />
+  </userContext.Provider>
 
 App.propTypes = {
-  user: PropTypes.object,
-  store: PropTypes.object
+  user: PropTypes.any,
+  store: PropTypes.any
 }
 
 export default App

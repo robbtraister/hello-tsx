@@ -1,0 +1,46 @@
+@import '../constants.scss';
+
+.footer {
+  background-color: $nav-background;
+  padding: 10px 20px;
+  position: relative;
+  left: 0;
+  right: 0;
+  z-index: 9998;
+
+  .container {
+    margin: 0 auto;
+    max-width: $max-width + 10;
+    display: flex;
+
+    div {
+      flex-grow: 1;
+      text-align: center;
+      border-left: 1px solid #058;
+      &:first-child {
+        border: none;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $mobile-width) {
+  .footer {
+    top: 48px;
+
+    .container {
+      flex-direction: column;
+
+      div {
+        border-left: none;
+        border-top: 1px solid #058;
+        padding: 10px 0;
+
+        &:first-child {
+          border: none;
+          padding-top: 0;
+        }
+      }
+    }
+  }
+}
