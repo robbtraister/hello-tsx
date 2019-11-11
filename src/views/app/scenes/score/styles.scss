@@ -33,22 +33,20 @@
     background-color: #fff;
     display: grid;
     grid-template-columns: 150px auto;
-    grid-template-rows: 50px auto;
     grid-column-gap: 20px;
 
     .meter {
-      grid-column-start: 1;
-      grid-column-end: 1;
-      grid-row-start: 1;
-      grid-row-end: span 2;
+      align-self: center;
     }
 
-    .title {
-      color: #555;
-      font-size: 20px;
-      font-weight: bold;
-      margin: 10px 0;
-      text-transform: uppercase;
+    .content {
+      .title {
+        color: #555;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 10px 0;
+        text-transform: uppercase;
+      }
     }
   }
 
@@ -64,7 +62,7 @@
     .entry {
       grid-template-columns: 100%;
 
-      .title {
+      .content {
         text-align: center;
         grid-row-start: 1;
         grid-row-end: 1;

@@ -16,7 +16,7 @@ const mockData = {
       value: 5,
       total: 7,
       title: 'Spend Less Than You Earn',
-      description: 'some description here'
+      description: 'some description here that is long and goes on and on for a while and makes the box grow further than you think'
     },
     {
       value: 6,
@@ -44,8 +44,10 @@ const Entry = ({ value, total, title, description }) =>
     <div className={styles.meter}>
       <Meter value={value} total={total} />
     </div>
-    <div className={styles.title}>{title}</div>
-    <div className={styles.description}>{description}</div>
+    <div className={styles.content}>
+      <div className={styles.title}>{title}</div>
+      <div className={styles.description}>{description}</div>
+    </div>
   </Widget>
 
 const Score = ({ data = mockData }) =>
