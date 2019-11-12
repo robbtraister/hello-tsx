@@ -16,6 +16,7 @@ const Router = () =>
     <Route path='/home' component={Home} />
     <Route path='/score' component={Score} />
     <Route path='/guidance' component={Guidance} />
+    <Route path='/accounts/:id' component={Accounts} />
     <Route path='/accounts' component={Accounts} />
     <Route path='/profile' component={Profile} />
     <Route path='/' component={GoHome} />

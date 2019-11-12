@@ -1,0 +1,45 @@
+@import '../../components/constants.scss';
+
+.grid {
+  display: grid;
+  grid-template-columns: 200px auto;
+
+  .accounts {
+    background-color: #ddd;
+    margin: -10px;
+    margin-right: 10px;
+    padding: 10px;
+
+    a {
+      color: #444;
+    }
+
+    &.select {
+      display: none;
+    }
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media only screen and (max-width: $mobile-width) {
+    grid-template-columns: 100%;
+
+    .accounts {
+      margin-right: -10px;
+      margin-bottom: 10px;
+
+      &.list {
+        display: none;
+      }
+      &.select {
+        display: block;
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
+}

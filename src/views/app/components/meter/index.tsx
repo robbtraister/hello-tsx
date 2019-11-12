@@ -15,7 +15,7 @@ const Meter = ({ value, total = 100, title, color = '#3a3' }) => {
       <g transform='rotate(-45)' fill='none' strokeWidth='20'>
         <path d='M-100 0A100 100 0 0 1 0 -100' stroke='#f80' />
         <path d='M0 -100A100 100 0 0 1 100 0' stroke='#ff0' />
-        <path d='M100 0A100 100 0 0 1 0 100' stroke='#0f0' />
+        <path d='M100 0A100 100 0 0 1 0 100' stroke='#0c0' />
       </g>
       <g style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }}>
         <g textAnchor='middle'>
