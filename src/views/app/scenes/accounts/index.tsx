@@ -8,56 +8,76 @@ import styles from './styles.scss'
 import Scene from '../../components/scene'
 import Widget from '../../components/widget'
 
-const mockData = [
-  {
-    label: 'tx1',
-    account: 1,
-    amount: 1.5
+const mockData = {
+  accounts: {
+    1: {
+      label: 'account 1'
+    },
+    2: {
+      label: 'account 2'
+    },
+    3: {
+      label: 'account 3'
+    }
   },
-  {
-    label: 'tx2',
-    account: 2,
-    amount: 6
-  },
-  {
-    label: 'tx3',
-    account: 3,
-    amount: 8
-  },
-  {
-    label: 'tx4',
-    account: 3,
-    amount: 3.5
-  },
-  {
-    label: 'tx5',
-    account: 2,
-    amount: 7.25
-  },
-  {
-    label: 'tx6',
-    account: 1,
-    amount: 23
-  }
-]
+  transactions: [
+    {
+      label: 'tx1',
+      account: 1,
+      amount: 1.5
+    },
+    {
+      label: 'tx2',
+      account: 2,
+      amount: 6
+    },
+    {
+      label: 'tx3',
+      account: 3,
+      amount: 8
+    },
+    {
+      label: 'tx4',
+      account: 3,
+      amount: 3.5
+    },
+    {
+      label: 'tx5',
+      account: 2,
+      amount: 7.25
+    },
+    {
+      label: 'tx6',
+      account: 1,
+      amount: 23
+    }
+  ]
+}
 
 const AccountTab = ({ children, ...props }) =>
   <li>
     <NavLink {...props}>{children}</NavLink>
   </li>
 
+const Transaction = ({ amount, label }) =>
+  <li>{`${label}: ${amount.toFixed(2)}`}</li>
+
 const Transactions = ({ account }) =>
   <>
     <h3>{account ? `account ${account}` : 'All Accounts'}</h3>
     <ul>
-      {mockData
+      {mockData.transactions
         .filter(datum => !account || datum.account == account)
-        .map(datum => <li key={datum.label}>{datum.label}: {datum.amount.toFixed(2)}</li>)}
+        .map(datum => <Transaction key={datum.label} {...datum} />)}
     </ul>
   </>
 
 const Accounts = ({ match, history }) => {
-  const { id } = match.params
+  const id = match.params.id
+
+  if (id && !mockData.accounts.hasOwnProperty(id)) {
+    history.replace('/accounts')
+  }
 
   function change (e) {
     history.push(`/accounts/${e.target.value || ''}`)
@@ -70,17 +90,21 @@ const Accounts = ({ match, history }) => {
           <div className={`${styles.accounts} ${styles.list}`}>
             <ul>
               <AccountTab to='/accounts'>All Accounts</AccountTab>
-              <AccountTab to='/accounts/1'>account 1</AccountTab>
-              <AccountTab to='/accounts/2'>account 2</AccountTab>
-              <AccountTab to='/accounts/3'>account 3</AccountTab>
+              {Object.keys(mockData.accounts)
+                .map(accountId =>
+                  <AccountTab to={`/accounts/${accountId}`} key={accountId}>{mockData.accounts[accountId].label}</AccountTab>
+                )
+              }
             </ul>
           </div>
           <div className={`${styles.accounts} ${styles.select}`}>
-            <select onChange={change}>
-              <option value={null} selected={!id}>All Accounts</option>
-              <option value='1' selected={id == 1}>account 1</option>
-              <option value='2' selected={id == 2}>account 2</option>
-              <option value='3' selected={id == 3}>account 3</option>
+            <select value={id} onChange={change}>
+              <option value=''>All Accounts</option>
+              {Object.keys(mockData.accounts)
+                .map(accountId =>
+                  <option value={accountId} key={accountId}>{mockData.accounts[accountId].label}</option>
+                )
+              }
             </select>
           </div>
           <div>
