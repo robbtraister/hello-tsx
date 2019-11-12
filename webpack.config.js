@@ -78,6 +78,9 @@ const rules = ({ isProd, extractCss }) => [
         loader: 'css-loader',
         options: {
           modules: {
+            localIdentName: (isProd)
+              ? '[hash:base64]'
+              : '[path][name]__[local]',
             mode: 'local'
           },
           onlyLocals: !extractCss,
@@ -258,11 +261,13 @@ module.exports = (_, argv) => {
       ],
       resolve: {
         ...resolve,
-        alias: {
-          ...resolve.alias,
-          react: 'preact/compat',
-          'react-dom': 'preact/compat'
-        }
+        alias: (isProd)
+          ? {
+            ...resolve.alias,
+            react: 'preact/compat',
+            'react-dom': 'preact/compat'
+          }
+          : resolve.alias
       },
       target: 'web',
       watchOptions
