@@ -42,11 +42,12 @@ const Graph = ({ data = mockData, xLabel = 'time', yLabel = 'money'}) => {
   const [hover, setHover] = useState(null)
 
   useEffect(() => {
-    if (svg.current) {
+    const target = svg.current
+    if (target) {
       const moveHandler = (e) => {
-        const x = offsetToX(e.offsetX, svg.current)
+        const x = offsetToX(e.offsetX, target)
         const px = xToP(x)
-        const py = yToP(offsetToY(e.offsetY, svg.current))
+        const py = yToP(offsetToY(e.offsetY, target))
         if (px >= 0 && px <= 100 && py >= 0 && py <= 100) {
           let py = 0
           for (let index = 1; index < data.length; index++) {
@@ -69,12 +70,12 @@ const Graph = ({ data = mockData, xLabel = 'time', yLabel = 'money'}) => {
       const leaveHandler = () => {
         setHover(null)
       }
-      svg.current.addEventListener('mousemove', moveHandler)
-      svg.current.addEventListener('mouseleave', leaveHandler)
+      target.addEventListener('mousemove', moveHandler)
+      target.addEventListener('mouseleave', leaveHandler)
 
       return () => {
-        svg.current.removeEventListener('mousemove', moveHandler)
-        svg.current.removeEventListener('mouseleave', leaveHandler)
+        target.removeEventListener('mousemove', moveHandler)
+        target.removeEventListener('mouseleave', leaveHandler)
       }
     }
   }, [svg.current])
