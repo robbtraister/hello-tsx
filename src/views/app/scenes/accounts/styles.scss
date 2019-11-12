@@ -12,6 +12,10 @@
 
     a {
       color: #444;
+
+      &:global(.active) {
+        color: #058;
+      }
     }
 
     &.select {

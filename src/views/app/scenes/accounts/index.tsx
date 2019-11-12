@@ -1,7 +1,7 @@
 'use strict'
 
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 
 import styles from './styles.scss'
 
@@ -56,7 +56,7 @@ const mockData = {
 
 const AccountTab = ({ children, ...props }) =>
   <li>
-    <NavLink {...props}>{children}</NavLink>
+    <NavLink {...props} exact>{children}</NavLink>
   </li>
 
 const Transaction = ({ amount, label }) =>
@@ -72,11 +72,18 @@ const Transactions = ({ account }) =>
     </ul>
   </>
 
-const Accounts = ({ match, history }) => {
+const Accounts = ({ match, history, location }) => {
   const id = match.params.id
 
+  if (!id) {
+    const accountId = new URLSearchParams(location.search).get('account')
+    if (accountId) {
+      return <Redirect to={`/accounts/${accountId}`} />
+    }
+  }
+
   if (id && !mockData.accounts.hasOwnProperty(id)) {
-    history.replace('/accounts')
+    return <Redirect to='/accounts' />
   }
 
   function change (e) {
@@ -98,14 +105,19 @@ const Accounts = ({ match, history }) => {
             </ul>
           </div>
           <div className={`${styles.accounts} ${styles.select}`}>
-            <select value={id} onChange={change}>
-              <option value=''>All Accounts</option>
-              {Object.keys(mockData.accounts)
-                .map(accountId =>
-                  <option value={accountId} key={accountId}>{mockData.accounts[accountId].label}</option>
-                )
-              }
-            </select>
+            <form method='GET' action='/accounts'>
+              <select name='account' value={id} onChange={change}>
+                <option value=''>All Accounts</option>
+                {Object.keys(mockData.accounts)
+                  .map(accountId =>
+                    <option value={accountId} key={accountId}>{mockData.accounts[accountId].label}</option>
+                  )
+                }
+              </select>
+              <noscript>
+                <input type='submit' value='Go' />
+              </noscript>
+            </form>
           </div>
           <div>
             <Transactions account={id} />
