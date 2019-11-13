@@ -46,9 +46,5 @@ export default function router (options) {
     }
   })
 
-  apiRouter.use((req, res, next) => {
-    res.sendStatus(404)
-  })
-
   return apiRouter
 }
