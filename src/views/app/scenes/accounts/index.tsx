@@ -9,17 +9,20 @@ import Scene from '../../components/scene'
 import Widget from '../../components/widget'
 
 const mockData = {
-  accounts: {
-    1: {
+  accounts: [
+    {
+      id: 1,
       label: 'account 1'
     },
-    2: {
+    {
+      id: 2,
       label: 'account 2'
     },
-    3: {
+    {
+      id: 3,
       label: 'account 3'
     }
-  },
+  ],
   transactions: [
     {
       label: 'tx1',
@@ -54,35 +57,37 @@ const mockData = {
   ]
 }
 
-const AccountTab = ({ children, ...props }) =>
+const AccountTab = ({ children, ...props }) => (
   <li>
-    <NavLink {...props} exact>{children}</NavLink>
+    <NavLink {...props} exact>
+      {children}
+    </NavLink>
   </li>
+)
 
-const Transaction = ({ amount, label }) =>
+const Transaction = ({ amount, label }) => (
   <li>{`${label}: ${amount.toFixed(2)}`}</li>
+)
 
-const Transactions = ({ account }) =>
-  <>
-    <h3>{account ? `account ${account}` : 'All Accounts'}</h3>
-    <ul>
-      {mockData.transactions
-        .filter(datum => !account || datum.account == account)
-        .map(datum => <Transaction key={datum.label} {...datum} />)}
-    </ul>
-  </>
+const Transactions = ({ transactions }) => (
+  <ul>
+    {transactions.map(datum => (
+      <Transaction key={datum.label} {...datum} />
+    ))}
+  </ul>
+)
 
 const Accounts = ({ match, history, location }) => {
   const id = match.params.id
 
   if (!id) {
-    const accountId = new URLSearchParams(location.search).get('account')
-    if (accountId) {
-      return <Redirect to={`/accounts/${accountId}`} />
+    const queryId = new URLSearchParams(location.search).get('id')
+    if (queryId) {
+      return <Redirect to={`/accounts/${queryId}`} />
     }
   }
 
-  if (id && !mockData.accounts.hasOwnProperty(id)) {
+  if (id && !mockData.accounts.find(account => account.id === id)) {
     return <Redirect to='/accounts' />
   }
 
@@ -97,22 +102,22 @@ const Accounts = ({ match, history, location }) => {
           <div className={`${styles.accounts} ${styles.list}`}>
             <ul>
               <AccountTab to='/accounts'>All Accounts</AccountTab>
-              {Object.keys(mockData.accounts)
-                .map(accountId =>
-                  <AccountTab to={`/accounts/${accountId}`} key={accountId}>{mockData.accounts[accountId].label}</AccountTab>
-                )
-              }
+              {mockData.accounts.map(account => (
+                <AccountTab to={`/accounts/${account.id}`} key={account.id}>
+                  {account.label}
+                </AccountTab>
+              ))}
             </ul>
           </div>
           <div className={`${styles.accounts} ${styles.select}`}>
             <form method='GET' action='/accounts'>
-              <select name='account' value={id} onChange={change}>
+              <select name='id' value={id} onChange={change}>
                 <option value=''>All Accounts</option>
-                {Object.keys(mockData.accounts)
-                  .map(accountId =>
-                    <option value={accountId} key={accountId}>{mockData.accounts[accountId].label}</option>
-                  )
-                }
+                {mockData.accounts.map(account => (
+                  <option value={account.id} key={account.id}>
+                    {account.label}
+                  </option>
+                ))}
               </select>
               <noscript>
                 <input type='submit' value='Go' />
@@ -120,7 +125,14 @@ const Accounts = ({ match, history, location }) => {
             </form>
           </div>
           <div>
-            <Transactions account={id} />
+            <h3 className={styles.title}>
+              {id ? `account ${id}` : 'All Accounts'}
+            </h3>
+            <Transactions
+              transactions={mockData.transactions.filter(
+                datum => !id || datum.account === id
+              )}
+            />
           </div>
         </div>
       </Widget>
