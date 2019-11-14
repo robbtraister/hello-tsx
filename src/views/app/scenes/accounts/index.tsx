@@ -11,47 +11,47 @@ import Widget from '../../components/widget'
 const mockData = {
   accounts: [
     {
-      id: 1,
+      id: '1',
       label: 'account 1'
     },
     {
-      id: 2,
+      id: '2',
       label: 'account 2'
     },
     {
-      id: 3,
+      id: '3',
       label: 'account 3'
     }
   ],
   transactions: [
     {
       label: 'tx1',
-      account: 1,
+      account: '1',
       amount: 1.5
     },
     {
       label: 'tx2',
-      account: 2,
+      account: '2',
       amount: 6
     },
     {
       label: 'tx3',
-      account: 3,
+      account: '3',
       amount: 8
     },
     {
       label: 'tx4',
-      account: 3,
+      account: '3',
       amount: 3.5
     },
     {
       label: 'tx5',
-      account: 2,
+      account: '2',
       amount: 7.25
     },
     {
       label: 'tx6',
-      account: 1,
+      account: '1',
       amount: 23
     }
   ]
