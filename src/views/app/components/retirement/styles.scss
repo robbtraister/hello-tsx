@@ -1,0 +1,72 @@
+form label {
+  input[type=radio] {
+    opacity: 0;
+    width: 0;
+  }
+
+  input ~ span {
+    display: inline-block;
+    border: 1px solid #058;
+    color: #058;
+    cursor: pointer;
+    padding: 3px 10px;
+    margin-left: -6px;
+  }
+
+  &:first-child span {
+    border-radius: 3px 0 0 3px;
+  }
+  &:last-child span {
+    border-radius: 0 3px 3px 0;
+  }
+
+  input:checked ~ span {
+    background-color: #058;
+    color: #fff;
+    cursor: default;
+  }
+}
+
+.savings, .debt {
+  * {
+    transition: transform 1s;
+  }
+
+  .line {
+    transform: scaleY(0);
+  }
+
+  &.collapsed {
+    .line {
+      transform: scaleY(1);
+    }
+  }
+}
+
+.savings {
+  &.collapsed {
+    .area {
+      transform: translate(0, -10px) scaleY(0);
+    }
+  }
+}
+
+.debt {
+  &.collapsed {
+    .area {
+      transform: translate(0, 0px) scaleY(0);
+    }
+  }
+}
+
+.grid {
+  transition: transform 1s;
+
+  &.savings {
+    transform: translate(0, -10px) scaleY(0.95) !important;
+  }
+
+  &.debt {
+    transform: translate(0, -190px) scaleY(0.95) !important;
+  }
+}

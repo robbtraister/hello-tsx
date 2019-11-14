@@ -5,8 +5,10 @@ import React from 'react'
 
 import styles from './styles.scss'
 
-const Widget = ({ children, className }) => (
-  <div className={`${styles.widget} ${className || ''}`.trim()}>{children}</div>
+const Widget = ({ children, className = '', ...props }) => (
+  <div className={`${styles.widget} ${className || ''}`.trim()} {...props}>
+    {children}
+  </div>
 )
 
 Widget.propTypes = {

@@ -7,6 +7,8 @@ import styles from './styles.scss'
 import Counter from '../../components/counter'
 import Graph from '../../components/graph'
 import Meter from '../../components/meter'
+import Pie from '../../components/pie'
+import Retirement from '../../components/retirement'
 import Scene from '../../components/scene'
 import Widget from '../../components/widget'
 
@@ -26,7 +28,10 @@ const Home = () => (
       <Graph />
     </Widget>
     <Widget>
-      <Counter />
+      <Pie />
+    </Widget>
+    <Widget>
+      <Retirement />
     </Widget>
     <Widget>
       <Counter right />
