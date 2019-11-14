@@ -16,7 +16,8 @@ const mockData = {
       value: 5,
       total: 7,
       title: 'Spend Less Than You Earn',
-      description: 'some description here that is long and goes on and on for a while and makes the box grow further than you think'
+      description:
+        'some description here that is long and goes on and on for a while and makes the box grow further than you think'
     },
     {
       value: 6,
@@ -39,7 +40,7 @@ const mockData = {
   ]
 }
 
-const Entry = ({ value, total, title, description }) =>
+const Entry = ({ value, total, title, description }) => (
   <Widget className={styles.entry}>
     <div className={styles.meter}>
       <Meter value={value} total={total} />
@@ -49,24 +50,29 @@ const Entry = ({ value, total, title, description }) =>
       <div className={styles.description}>{description}</div>
     </div>
   </Widget>
+)
 
-const Score = ({ data = mockData }) =>
+const Score = ({ data = mockData }) => (
   <div className={styles.grid}>
     <Widget className={styles.total}>
       <div className={styles.title}>Your Score</div>
       <Meter value={data.value} title='Wellness Score' />
       <div className={styles.description}>
-      <div className={styles.title}>Get the Complete Picture</div>
-      <div>
-        Add your savings, checking, credit card, loan, investment, 401(k), IRA, and other bank accounts so we can score you accurately
-      </div>
-      <div className={styles.peer}>
-        <div className={styles.title}>Your Peers</div>
-        <Meter value={data.peer} title='Wellness Score' color='#808' />
-      </div>
+        <div className={styles.title}>Get the Complete Picture</div>
+        <div>
+          Add your savings, checking, credit card, loan, investment, 401(k),
+          IRA, and other bank accounts so we can score you accurately
+        </div>
+        <div className={styles.peer}>
+          <div className={styles.title}>Your Peers</div>
+          <Meter value={data.peer} title='Wellness Score' color='#808' />
+        </div>
       </div>
     </Widget>
-    {data.entries.map((entry) => <Entry {...entry} key={entry.title} />)}
+    {data.entries.map(entry => (
+      <Entry {...entry} key={entry.title} />
+    ))}
   </div>
+)
 
 export default Scene(Score, 'Score')

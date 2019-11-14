@@ -4,7 +4,7 @@ import React from 'react'
 
 import styles from './styles.scss'
 
-const Footer = () =>
+const Footer = () => (
   <div className={styles.footer}>
     <div className={styles.container}>
       <div>Verisign</div>
@@ -12,5 +12,6 @@ const Footer = () =>
       <div>Support</div>
     </div>
   </div>
+)
 
 export default Footer

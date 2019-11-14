@@ -10,7 +10,7 @@ import Meter from '../../components/meter'
 import Scene from '../../components/scene'
 import Widget from '../../components/widget'
 
-const Home = () =>
+const Home = () => (
   <div className={styles.grid}>
     <Widget>
       <div className={styles.score}>
@@ -30,20 +30,21 @@ const Home = () =>
     </Widget>
     <Widget>
       <Counter right />
-      <div style={{height: '200px'}} />
+      <div style={{ height: '200px' }} />
     </Widget>
     <Widget>
       accounts
-      <div style={{height: '200px'}} />
+      <div style={{ height: '200px' }} />
     </Widget>
     <Widget>
       data
-      <div style={{height: '200px'}} />
+      <div style={{ height: '200px' }} />
     </Widget>
     <Widget>
       scroll
-      <div style={{height: '400px'}} />
+      <div style={{ height: '400px' }} />
     </Widget>
   </div>
+)
 
 export default Scene(Home, 'Home')

@@ -8,11 +8,12 @@ import Graph from '../../components/graph'
 import Scene from '../../components/scene'
 import Widget from '../../components/widget'
 
-const Guidance = () =>
+const Guidance = () => (
   <div className={styles.grid}>
     <Widget>
       <Graph />
     </Widget>
   </div>
+)
 
 export default Scene(Guidance, 'Guidance')

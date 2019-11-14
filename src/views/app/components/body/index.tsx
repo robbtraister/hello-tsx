@@ -4,11 +4,10 @@ import React from 'react'
 
 import styles from './styles.scss'
 
-const Body = ({ children }) =>
+const Body = ({ children }) => (
   <div className={styles.body}>
-    <div className={styles.container}>
-      {children}
-    </div>
+    <div className={styles.container}>{children}</div>
   </div>
+)
 
 export default Body

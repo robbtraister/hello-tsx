@@ -10,7 +10,7 @@ import Router from './router'
 
 import userContext from './contexts/user'
 
-const App = () =>
+const App = () => (
   <userContext.Provider value={null}>
     <Nav />
     <Body>
@@ -18,6 +18,7 @@ const App = () =>
     </Body>
     <Footer />
   </userContext.Provider>
+)
 
 App.propTypes = {
   user: PropTypes.any,
