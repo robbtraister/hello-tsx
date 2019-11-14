@@ -30,6 +30,10 @@
         display: inline-block;
         color: #555;
       }
+
+      &:global(.active) {
+        cursor: auto;
+      }
     }
 
     .menu {
@@ -78,6 +82,10 @@
   }
 }
 
+.mobile {
+  display: none !important;
+}
+
 @media only screen and (max-width: $mobile-width) {
   .nav {
     position: fixed;
@@ -95,19 +103,13 @@
         border-radius: 2px;
         display: inline-block;
         margin: 3px 5px 3px 0;
+        order: -1;
         height: 12px;
         width: 12px;
+      }
 
-        &.open {
-          background: repeating-linear-gradient(
-            0,
-            transparent 0px,
-            transparent 2px,
-            #555 2px,
-            #555 5px
-          );
-          border-color: #555;
-        }
+      .logo {
+        cursor: pointer;
       }
 
       .menu {
@@ -145,19 +147,6 @@
             padding: 10px;
           }
         }
-
-        &.open {
-          left: 0;
-          transition: left $transition-zero $transition-zero;
-
-          .shade {
-            opacity: 0.4;
-          }
-
-          .tabs {
-            left: 0;
-          }
-        }
       }
 
       .tab {
@@ -169,6 +158,43 @@
           display: block;
         }
       }
+
+      &.open .hamburger,
+      &:not(.closed) .hamburger:focus,
+      &:not(.closed) .logo:focus ~ .hamburger
+      {
+        background: repeating-linear-gradient(
+          0,
+          transparent 0px,
+          transparent 2px,
+          #555 2px,
+          #555 5px
+        );
+        border-color: #555;
+      }
+
+      &.open .menu,
+      &:not(.closed) .hamburger:focus ~ .menu,
+      &:not(.closed) .logo:focus ~ .menu
+      {
+        left: 0;
+        transition: left $transition-zero $transition-zero;
+
+        .shade {
+          opacity: 0.4;
+        }
+
+        .tabs {
+          left: 0;
+        }
+      }
     }
+  }
+
+  .desktop {
+    display: none !important;
+  }
+  .mobile {
+    display: initial !important;
   }
 }
