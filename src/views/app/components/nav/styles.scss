@@ -161,8 +161,7 @@
 
       &.open .hamburger,
       &:not(.closed) .hamburger:focus,
-      &:not(.closed) .logo:focus ~ .hamburger
-      {
+      &:not(.closed) .logo:focus ~ .hamburger {
         background: repeating-linear-gradient(
           0,
           transparent 0px,
@@ -175,8 +174,7 @@
 
       &.open .menu,
       &:not(.closed) .hamburger:focus ~ .menu,
-      &:not(.closed) .logo:focus ~ .menu
-      {
+      &:not(.closed) .logo:focus ~ .menu {
         left: 0;
         transition: left $transition-zero $transition-zero;
 

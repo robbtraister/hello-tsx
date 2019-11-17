@@ -1,5 +1,5 @@
 form label {
-  input[type=radio] {
+  input[type='radio'] {
     opacity: 0;
     width: 0;
   }
@@ -27,7 +27,8 @@ form label {
   }
 }
 
-.savings, .debt {
+.savings,
+.debt {
   * {
     transition: transform 1s;
   }
