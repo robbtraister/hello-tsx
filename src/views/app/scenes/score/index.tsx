@@ -1,5 +1,6 @@
 'use strict'
 
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import styles from './styles.scss'
@@ -52,11 +53,18 @@ const Entry = ({ value, total, title, description }) => (
   </Widget>
 )
 
+Entry.propTypes = {
+  value: PropTypes.number.isRequired,
+  total: PropTypes.number,
+  title: PropTypes.string.isRequired,
+  description: PropTypes.string
+}
+
 const Score = ({ data = mockData }) => (
   <div className={styles.grid}>
     <Widget className={styles.total}>
       <div className={styles.title}>Your Score</div>
-      <Meter value={data.value} title='Wellness Score' />
+      <Meter value={data.value} title="Wellness Score" />
       <div className={styles.description}>
         <div className={styles.title}>Get the Complete Picture</div>
         <div>
@@ -65,7 +73,7 @@ const Score = ({ data = mockData }) => (
         </div>
         <div className={styles.peer}>
           <div className={styles.title}>Your Peers</div>
-          <Meter value={data.peer} title='Wellness Score' color='#808' />
+          <Meter value={data.peer} title="Wellness Score" color="#808" />
         </div>
       </div>
     </Widget>
@@ -74,5 +82,13 @@ const Score = ({ data = mockData }) => (
     ))}
   </div>
 )
+
+Score.propTypes = {
+  data: PropTypes.shape({
+    value: PropTypes.number.isRequired,
+    peer: PropTypes.number,
+    entries: PropTypes.arrayOf(PropTypes.shape(Entry.propTypes))
+  })
+}
 
 export default Scene(Score, 'Score')

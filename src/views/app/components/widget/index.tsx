@@ -12,6 +12,7 @@ const Widget = ({ children, className = '', ...props }) => (
 )
 
 Widget.propTypes = {
+  children: PropTypes.node,
   className: PropTypes.string
 }
 

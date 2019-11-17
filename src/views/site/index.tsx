@@ -1,14 +1,15 @@
 'use strict'
 
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import './styles.scss'
 
-const Site = ({ title, App, Styles }) => (
+const Site = ({ title = '', App, Styles }) => (
   <html>
     <head>
       <title>{title}</title>
-      <meta name='viewport' content='width=device-width' />
+      <meta name="viewport" content="width=device-width" />
       <Styles />
       <noscript>
         <style
@@ -21,5 +22,11 @@ const Site = ({ title, App, Styles }) => (
     </body>
   </html>
 )
+
+Site.propTypes = {
+  title: PropTypes.string,
+  App: PropTypes.elementType,
+  Styles: PropTypes.elementType
+}
 
 export default Site

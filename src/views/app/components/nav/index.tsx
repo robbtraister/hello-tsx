@@ -25,7 +25,7 @@ const Profile = () => {
   const name = (user && user.name) || 'Profile'
 
   return (
-    <Tab to='/profile' className={styles.profile}>
+    <Tab to="/profile" className={styles.profile}>
       {name}
     </Tab>
   )
@@ -50,29 +50,27 @@ const Nav = () => {
         <div
           className={`${styles.container} ${
             open ? styles.open : open === false ? styles.closed : ''
-          }`.trim()}
-        >
-          <NavLink to='/home' className={`${styles.logo} ${styles.desktop}`}>
+          }`.trim()}>
+          <NavLink to="/home" className={`${styles.logo} ${styles.desktop}`}>
             <div className={styles.hello}>Hello</div>
             <div className={styles.wallet}>Wallet</div>
           </NavLink>
           <a
-            href='#'
+            href="#"
             className={`${styles.logo} ${styles.mobile}`}
-            onClick={toggleOpen}
-          >
+            onClick={toggleOpen}>
             <div className={styles.hello}>Hello</div>
             <div className={styles.wallet}>Wallet</div>
           </a>
-          <a href='#' className={styles.hamburger} onClick={toggleOpen} />
+          <a href="#" className={styles.hamburger} onClick={toggleOpen} />
           <div className={styles.menu}>
             <div className={styles.shade} />
             <ul className={styles.tabs}>
-              <Tab to='/home'>Home</Tab>
-              <Tab to='/score'>Score</Tab>
-              <Tab to='/guidance'>Guidance</Tab>
-              <Tab to='/accounts'>Accounts</Tab>
-              <Tab to='/budget'>Budget</Tab>
+              <Tab to="/home">Home</Tab>
+              <Tab to="/score">Score</Tab>
+              <Tab to="/guidance">Guidance</Tab>
+              <Tab to="/accounts">Accounts</Tab>
+              <Tab to="/budget">Budget</Tab>
             </ul>
           </div>
           <Profile />

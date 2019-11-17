@@ -3,35 +3,42 @@
 import PropTypes from 'prop-types'
 import React, { createRef, useEffect, useState } from 'react'
 
-function pToX (px) {
+function pToX(px) {
   return 3 * px
 }
 
-function xToP (x) {
+function xToP(x) {
   return x / 3
 }
 
-function pToY (py) {
+function pToY(py) {
   return -2 * py
 }
 
-function yToP (y) {
+function yToP(y) {
   return y / -2
 }
 
-function offsetToX (v, svg) {
+function offsetToX(v, svg) {
   return (
     (v / svg.clientWidth) * svg.viewBox.animVal.width + svg.viewBox.animVal.x
   )
 }
 
-function offsetToY (v, svg) {
+function offsetToY(v, svg) {
   return (
     (v / svg.clientHeight) * svg.viewBox.animVal.height + svg.viewBox.animVal.y
   )
 }
 
-const mockData = [[0, 10], [20, 25], [40, 35], [60, 40], [80, 50], [100, 75]]
+const mockData = [
+  [0, 10],
+  [20, 25],
+  [40, 35],
+  [60, 40],
+  [80, 50],
+  [100, 75]
+]
 
 const Graph = ({ data = mockData, xLabel = 'time', yLabel = 'money' }) => {
   const svg: React.Ref<SVGSVGElement> = createRef()
@@ -85,34 +92,33 @@ const Graph = ({ data = mockData, xLabel = 'time', yLabel = 'money' }) => {
 
   return (
     <svg
-      xmlns='http://www.w3.org/2000/svg'
-      viewBox='-20 -205 325 225'
-      ref={svg}
-    >
-      <g clipPath='inset(0)'>
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="-20 -205 325 225"
+      ref={svg}>
+      <g clipPath="inset(0)">
         <g>
           <path
             d={`M${pToX(100)},${pToY(0)}h-${pToX(100)}L${line}z`}
-            fill='#cfc'
+            fill="#cfc"
           />
-          <path d={`M${line}`} stroke='#080' strokeWidth='3' fill='none' />
+          <path d={`M${line}`} stroke="#080" strokeWidth="3" fill="none" />
           <animateTransform
-            attributeName='transform'
-            type='scale'
-            values='1 0 ; 1 1'
-            keyTimes='0 ; 1'
-            calcMode='spline'
-            keySplines='0.5 0 0.5 1'
-            dur='1s'
+            attributeName="transform"
+            type="scale"
+            values="1 0 ; 1 1"
+            keyTimes="0 ; 1"
+            calcMode="spline"
+            keySplines="0.5 0 0.5 1"
+            dur="1s"
           />
           {hover && (
             <circle
               cx={hover.x}
               cy={hover.y}
-              r='3'
-              stroke='#444'
-              strokeWidth='1'
-              fill='none'
+              r="3"
+              stroke="#444"
+              strokeWidth="1"
+              fill="none"
             />
           )}
           {hover && (
@@ -120,8 +126,7 @@ const Graph = ({ data = mockData, xLabel = 'time', yLabel = 'money' }) => {
               x={hover.x}
               y={hover.y}
               textAnchor={hover.textAnchor}
-              alignmentBaseline={hover.alignmentBaseline}
-            >
+              alignmentBaseline={hover.alignmentBaseline}>
               {hover.label}
             </text>
           )}
@@ -129,23 +134,23 @@ const Graph = ({ data = mockData, xLabel = 'time', yLabel = 'money' }) => {
         {hover && (
           <path
             d={`M${hover.x},${pToY(0)}v${pToY(100)}`}
-            stroke='#444'
-            strokeWidth='1'
-            fill='none'
+            stroke="#444"
+            strokeWidth="1"
+            fill="none"
           />
         )}
         <path
           d={`M${pToX(0)},${pToY(0)}h${pToX(100)}v${pToY(100)}h-${pToX(100)}z`}
-          strokeWidth='2'
-          stroke='#333'
-          fill='none'
+          strokeWidth="2"
+          stroke="#333"
+          fill="none"
         />
       </g>
-      <g x='0' y='0' fontSize='18'>
-        <text textAnchor='middle' transform='translate(150 18)'>
+      <g x="0" y="0" fontSize="18">
+        <text textAnchor="middle" transform="translate(150 18)">
           {xLabel}
         </text>
-        <text textAnchor='middle' transform='rotate(-90) translate(100 -5)'>
+        <text textAnchor="middle" transform="rotate(-90) translate(100 -5)">
           {yLabel}
         </text>
       </g>

@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom/server'
 import Graph from '~/src/views/app/components/graph'
 import Meter from '~/src/views/app/components/meter'
 
-export default function router (options) {
+export default function router(options) {
   const apiRouter = express()
 
   apiRouter.use((req, res, next) => {

@@ -17,11 +17,11 @@ const Home = () => (
     <Widget>
       <div className={styles.score}>
         <div className={styles.title}>Your Score</div>
-        <Meter value={85} title='Wellness Score' />
+        <Meter value={85} title="Wellness Score" />
       </div>
       <div className={styles.score}>
         <div className={`${styles.title} ${styles.peer}`}>Your Peers</div>
-        <Meter value={92} title='Wellness Score' color='#808' />
+        <Meter value={92} title="Wellness Score" color="#808" />
       </div>
     </Widget>
     <Widget>

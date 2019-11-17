@@ -1,7 +1,13 @@
 'use strict'
 
+import PropTypes from 'prop-types'
 import React from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
+import {
+  NavLink,
+  Redirect,
+  NavLinkProps,
+  RouteComponentProps
+} from 'react-router-dom'
 
 import styles from './styles.scss'
 
@@ -57,7 +63,7 @@ const mockData = {
   ]
 }
 
-const AccountTab = ({ children, ...props }) => (
+const AccountTab = ({ children, ...props }: NavLinkProps) => (
   <li>
     <NavLink {...props} exact>
       {children}
@@ -69,6 +75,11 @@ const Transaction = ({ amount, label }) => (
   <li>{`${label}: ${amount.toFixed(2)}`}</li>
 )
 
+Transaction.propTypes = {
+  amount: PropTypes.number.isRequired,
+  label: PropTypes.string.isRequired
+}
+
 const Transactions = ({ transactions }) => (
   <ul>
     {transactions.map(datum => (
@@ -77,7 +88,20 @@ const Transactions = ({ transactions }) => (
   </ul>
 )
 
-const Accounts = ({ match, history, location }) => {
+Transactions.propTypes = {
+  transactions: PropTypes.arrayOf(
+    PropTypes.shape({
+      amount: PropTypes.number.isRequired,
+      label: PropTypes.string.isRequired
+    })
+  )
+}
+
+const Accounts = ({
+  match,
+  history,
+  location
+}: RouteComponentProps<{ id: string }>) => {
   const id = match.params.id
 
   if (!id) {
@@ -88,10 +112,10 @@ const Accounts = ({ match, history, location }) => {
   }
 
   if (id && !mockData.accounts.find(account => account.id === id)) {
-    return <Redirect to='/accounts' />
+    return <Redirect to="/accounts" />
   }
 
-  function change (e) {
+  function change(e) {
     history.push(`/accounts/${e.target.value || ''}`)
   }
 
@@ -101,7 +125,7 @@ const Accounts = ({ match, history, location }) => {
         <div className={styles.grid}>
           <div className={`${styles.accounts} ${styles.list}`}>
             <ul>
-              <AccountTab to='/accounts'>All Accounts</AccountTab>
+              <AccountTab to="/accounts">All Accounts</AccountTab>
               {mockData.accounts.map(account => (
                 <AccountTab to={`/accounts/${account.id}`} key={account.id}>
                   {account.label}
@@ -110,9 +134,9 @@ const Accounts = ({ match, history, location }) => {
             </ul>
           </div>
           <div className={`${styles.accounts} ${styles.select}`}>
-            <form method='GET' action='/accounts'>
-              <select name='id' value={id} onChange={change}>
-                <option value=''>All Accounts</option>
+            <form method="GET" action="/accounts">
+              <select name="id" value={id} onChange={change}>
+                <option value="">All Accounts</option>
                 {mockData.accounts.map(account => (
                   <option value={account.id} key={account.id}>
                     {account.label}
@@ -120,7 +144,7 @@ const Accounts = ({ match, history, location }) => {
                 ))}
               </select>
               <noscript>
-                <input type='submit' value='Go' />
+                <input type="submit" value="Go" />
               </noscript>
             </form>
           </div>
