@@ -2,14 +2,14 @@
 
 import React from 'react'
 
-import Header from '../../components/header'
+import Title from '../../components/title'
 import Widget from '../../components/widget'
 
 const Scene = (Component, name) => {
   const WrappedComponent = props => (
     <>
       <Widget>
-        <Header>{name || Component.name}</Header>
+        <Title>{name || Component.name}</Title>
       </Widget>
       <Component {...props} />
     </>

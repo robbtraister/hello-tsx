@@ -18,6 +18,9 @@ const Guidance = () => {
       <Widget>
         <Retirement />
       </Widget>
+      <Widget>
+        <Retirement />
+      </Widget>
     </div>
   )
 }
