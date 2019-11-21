@@ -4,8 +4,8 @@ import express from 'express'
 import React from 'react'
 import ReactDOM from 'react-dom/server'
 
-import Graph from '~/src/views/app/components/graph'
-import Meter from '~/src/views/app/components/meter'
+import Graph from '~/src/views/app/components/presentational/graph'
+import Meter from '~/src/views/app/components/presentational/meter'
 
 export default function router(options) {
   const apiRouter = express()

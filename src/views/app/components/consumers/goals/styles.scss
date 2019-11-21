@@ -21,7 +21,7 @@ form {
     }
   }
 
-  input:checked+label {
+  input:checked + label {
     background-color: #058;
     color: #fff;
     cursor: default;
@@ -40,7 +40,7 @@ form {
     }
   }
 
-  input[value='savings']:checked~svg .grid {
+  input[value='savings']:checked ~ svg .grid {
     transform: translate(0, -10px) scaleY(0.95) !important;
 
     .debt {
@@ -54,7 +54,7 @@ form {
     }
   }
 
-  input[value='debt']:checked~svg .grid {
+  input[value='debt']:checked ~ svg .grid {
     transform: translate(0, -190px) scaleY(0.95) !important;
 
     .savings {

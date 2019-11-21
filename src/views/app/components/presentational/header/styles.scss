@@ -1,4 +1,4 @@
-@import '../constants.scss';
+@import '../../constants.scss';
 
 .nav {
   background-color: $nav-background;
@@ -26,6 +26,7 @@
         display: inline-block;
         color: $app-background;
       }
+
       .wallet {
         display: inline-block;
         color: #555;
@@ -192,6 +193,7 @@
   .desktop {
     display: none !important;
   }
+
   .mobile {
     display: initial !important;
   }

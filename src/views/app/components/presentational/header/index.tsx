@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import styles from './styles.scss'
-import { useUser } from '../../contexts/user'
+import { useUser } from '../../../contexts/user'
 
 const Tab = ({
   children,

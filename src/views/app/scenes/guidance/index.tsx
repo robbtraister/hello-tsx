@@ -4,22 +4,22 @@ import React from 'react'
 
 import styles from './styles.scss'
 
-import Graph from '../../components/graph'
-import Retirement from '../../components/retirement'
-import Scene from '../../components/scene'
-import Widget from '../../components/widget'
+import Goals from '../../components/consumers/goals'
+import Retirement from '../../components/consumers/retirement'
+import Scene from '../../components/presentational/scene'
+import Widget from '../../components/presentational/widget'
 
 const Guidance = () => {
   return (
     <div className={styles.grid}>
       <Widget>
-        <Graph />
-      </Widget>
-      <Widget>
         <Retirement />
       </Widget>
       <Widget>
-        <Retirement />
+        <Goals />
+      </Widget>
+      <Widget>
+        <Goals />
       </Widget>
     </div>
   )

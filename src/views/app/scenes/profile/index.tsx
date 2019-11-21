@@ -2,8 +2,8 @@
 
 import React from 'react'
 
-import Scene from '../../components/scene'
-import Widget from '../../components/widget'
+import Scene from '../../components/presentational/scene'
+import Widget from '../../components/presentational/widget'
 
 const Profile = () => <Widget>profile</Widget>
 

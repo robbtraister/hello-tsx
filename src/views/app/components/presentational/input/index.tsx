@@ -3,7 +3,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { useUniqueId } from '../../contexts/ids'
+import { useUniqueId } from '../../../contexts/ids'
 
 const Input = ({ label, ...props }) => {
   const id = useUniqueId()

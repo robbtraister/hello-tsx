@@ -31,16 +31,7 @@ function offsetToY(v, svg) {
   )
 }
 
-const mockData = [
-  [0, 10],
-  [20, 25],
-  [40, 35],
-  [60, 40],
-  [80, 50],
-  [100, 75]
-]
-
-const Graph = ({ data = mockData, xLabel = 'time', yLabel = 'money' }) => {
+const Graph = ({ data, xLabel = 'time', yLabel = 'money' }) => {
   const svg: React.Ref<SVGSVGElement> = createRef()
 
   const [hover, setHover] = useState(null)
@@ -101,7 +92,7 @@ const Graph = ({ data = mockData, xLabel = 'time', yLabel = 'money' }) => {
             d={`M${pToX(100)},${pToY(0)}h-${pToX(100)}L${line}z`}
             fill="#cfc"
           />
-          <path d={`M${line}`} stroke="#080" strokeWidth="3" fill="none" />
+          <path d={`M${line}`} stroke="#080" strokeWidth="2" fill="none" />
           <animateTransform
             attributeName="transform"
             type="scale"
@@ -159,7 +150,7 @@ const Graph = ({ data = mockData, xLabel = 'time', yLabel = 'money' }) => {
 }
 
 Graph.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array.isRequired,
   xLabel: PropTypes.string,
   yLabel: PropTypes.string
 }

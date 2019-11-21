@@ -3,22 +3,27 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import Body from './components/body'
-import Footer from './components/footer'
-import Header from './components/header'
+import Body from './components/presentational/body'
+import Footer from './components/presentational/footer'
+import Header from './components/presentational/header'
 import Router from './router'
 
 import uniqueIdContext from './contexts/ids'
+import storeContext from './contexts/store'
 import userContext from './contexts/user'
+
+import mockData from './data.json'
 
 const App = () => (
   <uniqueIdContext.Provider value={{ id: 0 }}>
     <userContext.Provider value={null}>
-      <Header />
-      <Body>
-        <Router />
-      </Body>
-      <Footer />
+      <storeContext.Provider value={mockData}>
+        <Header />
+        <Body>
+          <Router />
+        </Body>
+        <Footer />
+      </storeContext.Provider>
     </userContext.Provider>
   </uniqueIdContext.Provider>
 )

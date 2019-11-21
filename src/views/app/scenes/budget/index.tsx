@@ -2,16 +2,16 @@
 
 import React from 'react'
 
-import Pie from '../../components/pie'
-import Scene from '../../components/scene'
-import Widget from '../../components/widget'
+import Budget from '../../components/consumers/budget'
+import Scene from '../../components/presentational/scene'
+import Widget from '../../components/presentational/widget'
 
-const Budget = () => (
+const BudgetScene = () => (
   <Widget>
     <div style={{ margin: '0 auto', width: '50%' }}>
-      <Pie />
+      <Budget />
     </div>
   </Widget>
 )
 
-export default Scene(Budget, 'Budget')
+export default Scene(BudgetScene, 'Budget')

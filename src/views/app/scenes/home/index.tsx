@@ -4,13 +4,14 @@ import React from 'react'
 
 import styles from './styles.scss'
 
+import Budget from '../../components/consumers/budget'
 import Counter from '../../components/counter'
-import Graph from '../../components/graph'
-import Meter from '../../components/meter'
-import Pie from '../../components/pie'
-import Retirement from '../../components/retirement'
-import Scene from '../../components/scene'
-import Widget from '../../components/widget'
+import Goals from '../../components/consumers/goals'
+import Retirement from '../../components/consumers/retirement'
+import Meter from '../../components/presentational/meter'
+import Transactions from '../../components/consumers/transactions'
+import Scene from '../../components/presentational/scene'
+import Widget from '../../components/presentational/widget'
 
 const Home = () => (
   <div className={styles.grid}>
@@ -25,21 +26,21 @@ const Home = () => (
       </div>
     </Widget>
     <Widget>
-      <Graph />
-    </Widget>
-    <Widget>
-      <Pie />
-    </Widget>
-    <Widget>
       <Retirement />
+    </Widget>
+    <Widget>
+      <Budget />
+    </Widget>
+    <Widget>
+      <Goals />
     </Widget>
     <Widget>
       <Counter right />
       <div style={{ height: '200px' }} />
     </Widget>
     <Widget>
-      accounts
-      <div style={{ height: '200px' }} />
+      <h3 className={styles.title}>All Accounts</h3>
+      <Transactions />
     </Widget>
     <Widget>
       data

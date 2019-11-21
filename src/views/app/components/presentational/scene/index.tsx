@@ -2,8 +2,8 @@
 
 import React from 'react'
 
-import Title from '../../components/title'
-import Widget from '../../components/widget'
+import Title from '../title'
+import Widget from '../widget'
 
 const Scene = (Component, name) => {
   const WrappedComponent = props => (
