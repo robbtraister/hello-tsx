@@ -12,12 +12,10 @@ import uniqueIdContext from './contexts/ids'
 import storeContext from './contexts/store'
 import userContext from './contexts/user'
 
-import mockData from './data.json'
-
-const App = ({ user }) => (
+const App = ({ user, store }) => (
   <uniqueIdContext.Provider value={{ id: 0 }}>
     <userContext.Provider value={user}>
-      <storeContext.Provider value={mockData}>
+      <storeContext.Provider value={store}>
         <Header />
         <Body>
           <Router />
