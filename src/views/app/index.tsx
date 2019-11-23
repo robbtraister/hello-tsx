@@ -14,9 +14,9 @@ import userContext from './contexts/user'
 
 import mockData from './data.json'
 
-const App = () => (
+const App = ({ user }) => (
   <uniqueIdContext.Provider value={{ id: 0 }}>
-    <userContext.Provider value={null}>
+    <userContext.Provider value={user}>
       <storeContext.Provider value={mockData}>
         <Header />
         <Body>

@@ -22,16 +22,16 @@ const Tab = ({
 
 const Profile = () => {
   const user = useUser()
-  const name = (user && user.name) || 'Profile'
 
   return (
-    <Tab to="/profile" className={styles.profile}>
-      {name}
+    <Tab to={user ? '/profile' : '/login'} className={styles.profile}>
+      {user ? user.name : 'Login'}
     </Tab>
   )
 }
 
 const Header = () => {
+  const user = useUser()
   const [open, setOpen] = useState(null)
 
   useEffect(() => {
@@ -55,24 +55,28 @@ const Header = () => {
             <div className={styles.hello}>Hello</div>
             <div className={styles.wallet}>Wallet</div>
           </NavLink>
-          <a
-            href="#"
-            className={`${styles.logo} ${styles.mobile}`}
-            onClick={toggleOpen}>
-            <div className={styles.hello}>Hello</div>
-            <div className={styles.wallet}>Wallet</div>
-          </a>
-          <a href="#" className={styles.hamburger} onClick={toggleOpen} />
-          <div className={styles.menu}>
-            <div className={styles.shade} />
-            <ul className={styles.tabs}>
-              <Tab to="/dashboard">Home</Tab>
-              <Tab to="/score">Score</Tab>
-              <Tab to="/guidance">Guidance</Tab>
-              <Tab to="/accounts">Accounts</Tab>
-              <Tab to="/budget">Budget</Tab>
-            </ul>
-          </div>
+          {user && (
+            <>
+              <a
+                href="#"
+                className={`${styles.logo} ${styles.mobile}`}
+                onClick={toggleOpen}>
+                <div className={styles.hello}>Hello</div>
+                <div className={styles.wallet}>Wallet</div>
+              </a>
+              <a href="#" className={styles.hamburger} onClick={toggleOpen} />
+              <div className={styles.menu}>
+                <div className={styles.shade} />
+                <ul className={styles.tabs}>
+                  <Tab to="/dashboard">Home</Tab>
+                  <Tab to="/score">Score</Tab>
+                  <Tab to="/guidance">Guidance</Tab>
+                  <Tab to="/accounts">Accounts</Tab>
+                  <Tab to="/budget">Budget</Tab>
+                </ul>
+              </div>
+            </>
+          )}
           <Profile />
         </div>
       </nav>
