@@ -2,6 +2,6 @@
 
 import mockData from './data.json'
 
-export default function({ user, location }) {
+export default async function({ user, location }) {
   return mockData
 }
