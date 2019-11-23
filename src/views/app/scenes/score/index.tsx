@@ -32,27 +32,29 @@ Entry.propTypes = {
 const Score = () => {
   const { score } = useStore()
   return (
-    <div className={styles.grid}>
-      <Widget className={styles.total}>
-        <div className={styles.title}>Your Score</div>
-        <Meter value={score.value} title="Wellness Score" />
-        <div className={styles.description}>
-          <div className={styles.title}>Get the Complete Picture</div>
-          <div>
-            Add your savings, checking, credit card, loan, investment, 401(k),
-            IRA, and other bank accounts so we can score you accurately
+    <Scene title="Score">
+      <div className={styles.grid}>
+        <Widget className={styles.total}>
+          <div className={styles.title}>Your Score</div>
+          <Meter value={score.value} title="Wellness Score" />
+          <div className={styles.description}>
+            <div className={styles.title}>Get the Complete Picture</div>
+            <div>
+              Add your savings, checking, credit card, loan, investment, 401(k),
+              IRA, and other bank accounts so we can score you accurately
+            </div>
+            <div className={styles.peer}>
+              <div className={styles.title}>Your Peers</div>
+              <Meter value={score.peer} title="Wellness Score" color="#808" />
+            </div>
           </div>
-          <div className={styles.peer}>
-            <div className={styles.title}>Your Peers</div>
-            <Meter value={score.peer} title="Wellness Score" color="#808" />
-          </div>
-        </div>
-      </Widget>
-      {score.entries.map(entry => (
-        <Entry {...entry} key={entry.title} />
-      ))}
-    </div>
+        </Widget>
+        {score.entries.map(entry => (
+          <Entry {...entry} key={entry.title} />
+        ))}
+      </div>
+    </Scene>
   )
 }
 
-export default Scene(Score, 'Score')
+export { Score }

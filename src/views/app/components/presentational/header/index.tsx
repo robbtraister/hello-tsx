@@ -51,7 +51,7 @@ const Header = () => {
           className={`${styles.container} ${
             open ? styles.open : open === false ? styles.closed : ''
           }`.trim()}>
-          <NavLink to="/home" className={`${styles.logo} ${styles.desktop}`}>
+          <NavLink to="/" className={`${styles.logo} ${styles.desktop}`}>
             <div className={styles.hello}>Hello</div>
             <div className={styles.wallet}>Wallet</div>
           </NavLink>
@@ -66,7 +66,7 @@ const Header = () => {
           <div className={styles.menu}>
             <div className={styles.shade} />
             <ul className={styles.tabs}>
-              <Tab to="/home">Home</Tab>
+              <Tab to="/dashboard">Home</Tab>
               <Tab to="/score">Score</Tab>
               <Tab to="/guidance">Guidance</Tab>
               <Tab to="/accounts">Accounts</Tab>

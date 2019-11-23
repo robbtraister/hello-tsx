@@ -1,21 +1,23 @@
 'use strict'
 
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import Title from '../title'
 import Widget from '../widget'
 
-const Scene = (Component, name) => {
-  const WrappedComponent = props => (
-    <>
-      <Widget>
-        <Title>{name || Component.name}</Title>
-      </Widget>
-      <Component {...props} />
-    </>
-  )
+const Scene = ({ title, children }) => (
+  <>
+    <Widget>
+      <Title>{title}</Title>
+    </Widget>
+    {children}
+  </>
+)
 
-  return WrappedComponent
+Scene.propTypes = {
+  children: PropTypes.node,
+  title: PropTypes.string.isRequired
 }
 
 export default Scene

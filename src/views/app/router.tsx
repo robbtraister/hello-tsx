@@ -3,18 +3,18 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router'
 
-import Accounts from './scenes/accounts'
-import Budget from './scenes/budget'
-import Guidance from './scenes/guidance'
-import Home from './scenes/home'
-import Profile from './scenes/profile'
-import Score from './scenes/score'
+import { Accounts } from './scenes/accounts'
+import { Budget } from './scenes/budget'
+import { Guidance } from './scenes/guidance'
+import { Dashboard } from './scenes/dashboard'
+import { Profile } from './scenes/profile'
+import { Score } from './scenes/score'
 
-const GoHome = () => <Redirect to="/home" />
+const GoHome = () => <Redirect to="/dashboard" />
 
 const Router = () => (
   <Switch>
-    <Route path="/home" component={Home} />
+    <Route path="/dashboard" component={Dashboard} />
     <Route path="/score" component={Score} />
     <Route path="/guidance" component={Guidance} />
     <Route path="/accounts/:id" component={Accounts} />

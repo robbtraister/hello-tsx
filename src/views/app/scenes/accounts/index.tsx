@@ -47,44 +47,46 @@ const Accounts = ({
   }
 
   return (
-    <div style={{ display: 'grid' }}>
-      <Widget>
-        <div className={styles.grid}>
-          <div className={`${styles.accounts} ${styles.list}`}>
-            <ul>
-              <AccountTab to="/accounts">All Accounts</AccountTab>
-              {accounts.map(account => (
-                <AccountTab to={`/accounts/${account.id}`} key={account.id}>
-                  {account.label}
-                </AccountTab>
-              ))}
-            </ul>
-          </div>
-          <div className={`${styles.accounts} ${styles.select}`}>
-            <form method="GET" action="/accounts">
-              <select name="id" value={id} onChange={change}>
-                <option value="">All Accounts</option>
+    <Scene title="Accounts">
+      <div style={{ display: 'grid' }}>
+        <Widget>
+          <div className={styles.grid}>
+            <div className={`${styles.accounts} ${styles.list}`}>
+              <ul>
+                <AccountTab to="/accounts">All Accounts</AccountTab>
                 {accounts.map(account => (
-                  <option value={account.id} key={account.id}>
+                  <AccountTab to={`/accounts/${account.id}`} key={account.id}>
                     {account.label}
-                  </option>
+                  </AccountTab>
                 ))}
-              </select>
-              <noscript>
-                <input type="submit" value="Go" />
-              </noscript>
-            </form>
+              </ul>
+            </div>
+            <div className={`${styles.accounts} ${styles.select}`}>
+              <form method="GET" action="/accounts">
+                <select name="id" value={id} onChange={change}>
+                  <option value="">All Accounts</option>
+                  {accounts.map(account => (
+                    <option value={account.id} key={account.id}>
+                      {account.label}
+                    </option>
+                  ))}
+                </select>
+                <noscript>
+                  <input type="submit" value="Go" />
+                </noscript>
+              </form>
+            </div>
+            <div>
+              <h3 className={styles.title}>
+                {id ? `account ${id}` : 'All Accounts'}
+              </h3>
+              <Transactions account={id} />
+            </div>
           </div>
-          <div>
-            <h3 className={styles.title}>
-              {id ? `account ${id}` : 'All Accounts'}
-            </h3>
-            <Transactions account={id} />
-          </div>
-        </div>
-      </Widget>
-    </div>
+        </Widget>
+      </div>
+    </Scene>
   )
 }
 
-export default Scene(Accounts, 'Accounts')
+export { Accounts }

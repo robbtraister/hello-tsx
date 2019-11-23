@@ -11,18 +11,20 @@ import Widget from '../../components/presentational/widget'
 
 const Guidance = () => {
   return (
-    <div className={styles.grid}>
-      <Widget>
-        <Retirement />
-      </Widget>
-      <Widget>
-        <Goals />
-      </Widget>
-      <Widget>
-        <Goals />
-      </Widget>
-    </div>
+    <Scene title="Guidance">
+      <div className={styles.grid}>
+        <Widget>
+          <Retirement />
+        </Widget>
+        <Widget>
+          <Goals />
+        </Widget>
+        <Widget>
+          <Goals />
+        </Widget>
+      </div>
+    </Scene>
   )
 }
 
-export default Scene(Guidance, 'Guidance')
+export { Guidance }
