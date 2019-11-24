@@ -3,8 +3,8 @@
 import React from 'react'
 import {
   NavLink,
-  Redirect,
   NavLinkProps,
+  Redirect,
   RouteComponentProps
 } from 'react-router-dom'
 

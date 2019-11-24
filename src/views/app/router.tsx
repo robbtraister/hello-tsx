@@ -24,8 +24,7 @@ const Router = () => {
       <Route path="/dashboard" component={user ? Dashboard : Login} />
       <Route path="/score" component={user ? Score : Login} />
       <Route path="/guidance" component={user ? Guidance : Login} />
-      <Route path="/accounts/:id" component={user ? Accounts : Login} />
-      <Route path="/accounts" component={user ? Accounts : Login} />
+      <Route path="/accounts/:id?" component={user ? Accounts : Login} />
       <Route path="/budget" component={user ? Budget : Login} />
       <Route path="/profile" component={user ? Profile : Login} />
       <Route path="/login" component={user ? GoHome : Login} />
