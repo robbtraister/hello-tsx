@@ -4,14 +4,25 @@ import express from 'express'
 import React from 'react'
 import ReactDOM from 'react-dom/server'
 
+import { sendMessage } from '../messages'
+
 import Graph from '~/src/views/app/components/presentational/graph'
 import Meter from '~/src/views/app/components/presentational/meter'
 
 export default function router(options) {
   const apiRouter = express()
 
-  apiRouter.use((req, res, next) => {
-    req.user ? next() : res.sendStatus(401)
+  apiRouter.use('/csrf', (req, res, next) => {
+    res.send({ csrf: req.csrfToken() })
+  })
+
+  apiRouter.post('/restart', async (req, res, next) => {
+    try {
+      await sendMessage({ type: 'restart' })
+      res.sendStatus(200)
+    } catch (err) {
+      next(err)
+    }
   })
 
   apiRouter.use('/uri', (req, res, next) => {
