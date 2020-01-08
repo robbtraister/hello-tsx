@@ -4,7 +4,7 @@ import express from 'express'
 import React from 'react'
 import ReactDOM from 'react-dom/server'
 
-import { sendMessage } from '../messages'
+import { Server as ServerError } from '../errors'
 
 import Graph from '~/src/views/app/components/presentational/graph'
 import Meter from '~/src/views/app/components/presentational/meter'
@@ -16,17 +16,12 @@ export default function router(options) {
     res.send({ csrf: req.csrfToken() })
   })
 
-  apiRouter.post('/restart', async (req, res, next) => {
-    try {
-      await sendMessage({ type: 'restart' })
-      res.sendStatus(200)
-    } catch (err) {
-      next(err)
-    }
-  })
-
   apiRouter.use('/uri', (req, res, next) => {
     res.send({ uri: req.originalUrl })
+  })
+
+  apiRouter.use(['/error/:code(\\d+)', '/error'], (req, res, next) => {
+    next(new ServerError(+req.params.code || 500))
   })
 
   apiRouter.use('/meter', (req, res, next) => {
