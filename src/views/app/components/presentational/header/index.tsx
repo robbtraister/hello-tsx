@@ -66,7 +66,12 @@ const Header = () => {
                 <div className={styles.hello}>Hello</div>
                 <div className={styles.wallet}>Wallet</div>
               </a>
-              <a href="#" className={styles.hamburger} onClick={toggleOpen} />
+              <a
+                href="#"
+                title="hamburger menu"
+                className={styles.hamburger}
+                onClick={toggleOpen}
+              />
               <div className={styles.menu}>
                 <div className={styles.shade} />
                 <ul className={styles.tabs}>
