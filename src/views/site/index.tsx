@@ -6,10 +6,11 @@ import React from 'react'
 import './styles.scss'
 
 const Site = ({ title = '', App, Styles }) => (
-  <html>
+  <html lang="en">
     <head>
       <meta charSet="UTF-8" />
       <meta name="viewport" content="width=device-width" />
+      <meta name="description" content="HelloWallet in JavaScript" />
       <title>{title}</title>
       <Styles />
       <noscript>

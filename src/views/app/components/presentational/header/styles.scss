@@ -75,9 +75,9 @@
       }
 
       &.profile a {
-        background-color: #3a3;
+        background-color: $profile-tab-background;
         border-radius: 5px;
-        color: #fff;
+        color: $profile-tab-color;
       }
     }
   }

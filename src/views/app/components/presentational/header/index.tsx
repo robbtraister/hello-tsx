@@ -24,9 +24,11 @@ const Profile = () => {
   const user = useUser()
 
   return (
-    <Tab to={user ? '/profile' : '/login'} className={styles.profile}>
-      {user ? user.name : 'Login'}
-    </Tab>
+    <div className={`${styles.tab} ${styles.profile}`}>
+      <NavLink to={user ? '/profile' : '/login'}>
+        {user ? user.name : 'Login'}
+      </NavLink>
+    </div>
   )
 }
 
