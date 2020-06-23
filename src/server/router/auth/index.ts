@@ -48,13 +48,13 @@ export default function router(options: Options) {
       req.user = req.user || null
       next()
     })
-
-    router.use(/(\/auth)?\/use?r/, (req, res, next) => {
-      req.query.jsonp && /^[$_a-z][$_a-z0-9]*$/i.test(req.query.jsonp)
-        ? res.send(`/**/;${req.query.jsonp}(${JSON.stringify(req.user)})`)
-        : res.send({ user: req.user })
-    })
   }
+
+  router.use(/(\/auth)?\/use?r/, (req, res, next) => {
+    req.query.jsonp && /^[$_a-z][$_a-z0-9]*$/i.test(req.query.jsonp)
+      ? res.send(`/**/;${req.query.jsonp}(${JSON.stringify(req.user)})`)
+      : res.send({ user: req.user })
+  })
 
   return router
 }
