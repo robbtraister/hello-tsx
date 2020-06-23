@@ -103,7 +103,7 @@
         border: 4px solid #fff;
         border-radius: 2px;
         display: inline-block;
-        margin: 3px 5px 3px 0;
+        margin: auto 5px auto 0;
         order: -1;
         height: 12px;
         width: 12px;
@@ -111,6 +111,7 @@
 
       .logo {
         cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
       }
 
       .menu {
@@ -160,9 +161,16 @@
         }
       }
 
+      :global(#logo-box) {
+        width: 0;
+        height: 0;
+        margin: 0;
+        padding: 0;
+      }
+
       &.open .hamburger,
-      &:not(.closed) .hamburger:focus,
-      &:not(.closed) .logo:focus ~ .hamburger {
+      // &:not(.closed) .hamburger:focus,
+      &:not(.closed) :global(#logo-box):focus ~ label > .hamburger {
         background: repeating-linear-gradient(
           0,
           transparent 0px,
@@ -174,8 +182,8 @@
       }
 
       &.open .menu,
-      &:not(.closed) .hamburger:focus ~ .menu,
-      &:not(.closed) .logo:focus ~ .menu {
+      // &:not(.closed) .hamburger:focus ~ .menu,
+      &:not(.closed) :global(#logo-box):focus ~ .menu {
         left: 0;
         transition: left $transition-zero $transition-zero;
 

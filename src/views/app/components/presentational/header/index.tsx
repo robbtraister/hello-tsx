@@ -1,6 +1,6 @@
 'use strict'
 
-import React, { useState, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import styles from './styles.scss'
@@ -44,7 +44,10 @@ const Header = () => {
     }
   }, [open])
 
-  const toggleOpen = () => setOpen(open => !open)
+  const toggleOpen = useCallback(e => {
+    e.preventDefault()
+    setOpen(open => !open)
+  }, [])
 
   return (
     <>
@@ -59,19 +62,15 @@ const Header = () => {
           </NavLink>
           {user && (
             <>
-              <a
-                href="#"
+              <input type="checkbox" id="logo-box" />
+              <label
+                htmlFor="logo-box"
                 className={`${styles.logo} ${styles.mobile}`}
                 onClick={toggleOpen}>
+                <span title="hamburger menu" className={styles.hamburger} />
                 <div className={styles.hello}>Hello</div>
                 <div className={styles.wallet}>Wallet</div>
-              </a>
-              <a
-                href="#"
-                title="hamburger menu"
-                className={styles.hamburger}
-                onClick={toggleOpen}
-              />
+              </label>
               <div className={styles.menu}>
                 <div className={styles.shade} />
                 <ul className={styles.tabs}>
