@@ -37,6 +37,13 @@
       }
     }
 
+    :global(#logo-box) {
+      width: 0;
+      height: 0;
+      margin: 0;
+      padding: 0;
+    }
+
     .menu {
       .shade {
         display: none;
@@ -159,13 +166,6 @@
           border-radius: 0;
           display: block;
         }
-      }
-
-      :global(#logo-box) {
-        width: 0;
-        height: 0;
-        margin: 0;
-        padding: 0;
       }
 
       &.open .hamburger,
