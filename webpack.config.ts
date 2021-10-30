@@ -68,7 +68,15 @@ export default function getConfig(
     plugins: [
       isProd &&
         new CopyWebpackPlugin({
-          patterns: [{ from: path.resolve(__dirname, "public") }],
+          patterns: [
+            {
+              from: path.resolve(__dirname, "public"),
+              globOptions: {
+                dot: false,
+                gitignore: true,
+              },
+            },
+          ],
         }),
       new DefinePlugin({
         "process.env.PUBLIC_PATH": JSON.stringify(publicPath),

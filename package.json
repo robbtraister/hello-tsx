@@ -1,14 +1,14 @@
 {
-  "name": "launchpad",
+  "name": "hello-tsx",
   "version": "1.0.0",
-  "repository": "git@github.com:robbtraister/launchpad.git",
+  "repository": "git@github.com:robbtraister/hello-tsx.git",
   "author": "robb.traister@gmail.com",
   "license": "MIT",
   "scripts": {
     "analyze": "yarn run --silent build --mode production --profile --json > ./stats.json && webpack-bundle-analyzer ./stats.json ./dist/ --mode static",
     "build": "webpack build --mode production",
     "build:css": "[ -f ./webpack.styles.ts ] && webpack build --config ./webpack.styles.ts",
-    "build:vendors": "[ -f ./webpack.vendors.ts ] && ([ ! -f ./public/vendors-manifest.json ] || [ \"$(md5 -q ./node_modules/.yarn-integrity)\" != \"$(node -p \"require('./public/vendors-manifest.json').name.split('_').pop()\")\" ]) && NODE_OPTIONS=--max-old-space-size=4096 webpack build --config ./webpack.vendors.ts --env HASH=$(md5 -q ./node_modules/.yarn-integrity) || true",
+    "build:vendors": "[ -f ./webpack.vendors.ts ] && ([ ! -f ./public/.dev/vendors-manifest.json ] || [ \"$(md5 -q ./node_modules/.yarn-integrity)\" != \"$(node -p \"require('./public/.dev/vendors-manifest.json').name.split('_').pop()\")\" ]) && NODE_OPTIONS=--max-old-space-size=4096 webpack build --config ./webpack.vendors.ts --env HASH=$(md5 -q ./node_modules/.yarn-integrity) || true",
     "clean:css": "rimraf './src/**/*.{css,scss}.d.ts'",
     "jest": "jest",
     "lint": "yarn run lint:ls && yarn run lint:css && yarn run lint:js",

@@ -13,8 +13,12 @@ if (redirect) {
 }
 
 const dataPromise = Promise.all([
-  window.fetch("/store.json").then((resp) => resp.json()),
-  window.fetch("/user.json").then((resp) => resp.json()),
+  window
+    .fetch(`${process.env.PUBLIC_PATH || "/"}store.json`)
+    .then((resp) => resp.json()),
+  window
+    .fetch(`${process.env.PUBLIC_PATH || "/"}user.json`)
+    .then((resp) => resp.json()),
 ]);
 
 window.document.addEventListener("DOMContentLoaded", async () => {

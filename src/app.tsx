@@ -12,7 +12,7 @@ export function App({ user, store }: { user: User; store: Store }) {
   return (
     <userContext.Provider value={user}>
       <storeContext.Provider value={store}>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_PATH || "/"}>
           <Header />
           <Body>
             <Pages />
