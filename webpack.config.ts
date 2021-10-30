@@ -1,5 +1,6 @@
 import path from "path";
 
+import CopyWebpackPlugin from "copy-webpack-plugin";
 import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
@@ -61,6 +62,10 @@ export default function getConfig(
       path: path.resolve(__dirname, "dist"),
     },
     plugins: [
+      isProd &&
+        new CopyWebpackPlugin({
+          patterns: [{ from: path.resolve(__dirname, "public") }],
+        }),
       new ForkTsCheckerWebpackPlugin({
         eslint: {
           enabled: true,

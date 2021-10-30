@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 
-import { Pages } from "./pages";
+import { App } from "./app";
 
 import "./index.scss";
 
@@ -12,10 +12,16 @@ if (redirect) {
   history.replaceState(null, "", redirect);
 }
 
-window.document.addEventListener("DOMContentLoaded", () => {
+const dataPromise = Promise.all([
+  window.fetch("/store.json").then((resp) => resp.json()),
+  window.fetch("/user.json").then((resp) => resp.json()),
+]);
+
+window.document.addEventListener("DOMContentLoaded", async () => {
+  const [store, user] = await dataPromise;
   ReactDOM.render(
     <StrictMode>
-      <Pages />
+      <App store={store} user={user} />
     </StrictMode>,
     document.getElementById("root")
   );
