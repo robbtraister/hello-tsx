@@ -17,10 +17,15 @@
     }
 
     .logo {
-      display: inline-block;
+      align-items: center;
+      display: flex;
       font-size: 24px;
       font-weight: bold;
       margin-right: auto;
+
+      &.mobile {
+        display: none;
+      }
 
       .hello {
         display: inline-block;
@@ -85,40 +90,50 @@
         background-color: $profile-tab-background;
         border-radius: 5px;
         color: $profile-tab-color;
+        height: 18px;
       }
     }
   }
 }
 
-.mobile {
-  display: none !important;
-}
-
 @media only screen and (max-width: $mobile-width) {
   .nav {
     position: fixed;
+    box-shadow: 0 0 5px 3px $app-background;
 
     .container {
       .hamburger {
-        background: repeating-linear-gradient(
-          0,
-          #555 0px,
-          #555 2px,
-          transparent 2px,
-          transparent 5px
-        );
-        border: 4px solid #fff;
+        background-color: #fff;
         border-radius: 2px;
-        display: inline-block;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         margin: auto 5px auto 0;
+        padding: 4px;
         order: -1;
         height: 12px;
         width: 12px;
+        transition: background-color $menu-duration;
+
+        .layer {
+          background-color: #555;
+          height: 2px;
+          width: 100%;
+          transition: background-color $menu-duration;
+        }
       }
 
       .logo {
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
+
+        &.desktop {
+          display: none;
+        }
+
+        &.mobile {
+          display: flex;
+        }
       }
 
       .menu {
@@ -144,7 +159,7 @@
         .tabs {
           background-color: $dashboard-background;
           bottom: 0;
-          border-top: 10px solid $tab-color;
+          border-top: 4px solid $tab-color;
           flex-direction: column;
           left: -50%;
           position: absolute;
@@ -171,14 +186,11 @@
       &.open .hamburger,
       // &:not(.closed) .hamburger:focus,
       &:not(.closed) :global(#logo-box):focus ~ label > .hamburger {
-        background: repeating-linear-gradient(
-          0,
-          transparent 0px,
-          transparent 2px,
-          #555 2px,
-          #555 5px
-        );
-        border-color: #555;
+        background-color: #555;
+
+        .layer {
+          background-color: #fff;
+        }
       }
 
       &.open .menu,
@@ -196,13 +208,5 @@
         }
       }
     }
-  }
-
-  .desktop {
-    display: none !important;
-  }
-
-  .mobile {
-    display: initial !important;
   }
 }

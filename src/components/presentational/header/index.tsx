@@ -70,7 +70,11 @@ export function Header() {
                 className={`${styles.logo} ${styles.mobile}`}
                 onClick={toggleOpen}
               >
-                <span title="hamburger menu" className={styles.hamburger} />
+                <div title="hamburger menu" className={styles.hamburger}>
+                  <div className={styles.layer} />
+                  <div className={styles.layer} />
+                  <div className={styles.layer} />
+                </div>
                 <div className={styles.hello}>Hello</div>
                 <div className={styles.wallet}>Wallet</div>
               </label>
